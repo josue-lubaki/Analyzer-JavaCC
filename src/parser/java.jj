@@ -47,8 +47,7 @@ options {
 }
 
 PARSER_BEGIN(JavaParser)
-package Parser;
-
+package parser;
 import java.io.*;
 
 public class JavaParser
