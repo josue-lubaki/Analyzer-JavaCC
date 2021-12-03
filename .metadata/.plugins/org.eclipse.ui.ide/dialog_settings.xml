@@ -6,6 +6,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="E:\SA_2021\Analyse des Programmes\JavaCC\Apprentissage"/>
 			<item value="C:\Users\josue\OneDrive\UQTR\Eclipse\Session_Mourad_Badri\Projet_Chalet"/>
 			<item value="E:\SA_2021\Analyse des Programmes\JavaCC\Apprentissage\MonProjet"/>
 			<item value="E:\SA_2021\Analyse des Programmes\JavaCC\Apprentissage\JavaCCTest"/>
