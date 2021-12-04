@@ -12,7 +12,6 @@ import java.util.List;
 
 public class JavaParser implements JavaParserConstants {
         private JavaObjetManager objectManager;
-   private InputStream inputStream = null;
 
     /**
      * Constructor for JavaParser.
@@ -22,11 +21,11 @@ public class JavaParser implements JavaParserConstants {
    {
       //this(System.in);
       try {
-        this.objectManager = objectManager;
-          inputStream = new FileInputStream(file);
-          jj_input_stream = new JavaCharStream(inputStream, 1,1);
-          token_source = new JavaParserTokenManager(jj_input_stream);
-          ReInit(inputStream);
+          this.objectManager = objectManager;
+          InputStream stream = new FileInputStream(file);
+              jj_input_stream = new JavaCharStream(stream, 1, 1);
+              token_source = new JavaParserTokenManager(jj_input_stream);
+              ReInit(stream);
       }
       catch(Exception e) {
         e.printStackTrace();
@@ -99,11 +98,11 @@ public class JavaParser implements JavaParserConstants {
                                 parser = new JavaParser(fs, om);
                                 parser.getObjectManager().push(new JavaFile(file));
                                 parser.CompilationUnit();
-                                System.out.println(String.format("%s: Success", f.getName()));
+                                System.out.println(String.format("%s: Success", fs.getName()));
                         }
                         catch(ParseException e) {
                                 error++;
-                                System.out.println(String.format("%s: Error: %s", f.getName(), e.getMessage()));
+                                System.out.println(String.format("%s: Error: %s", fs.getName(), e.getMessage()));
                         }
         }
 
