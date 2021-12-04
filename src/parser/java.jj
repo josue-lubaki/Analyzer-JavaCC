@@ -44,26 +44,38 @@ options {
   //ERROR_REPORTING = true;
   STATIC = false;
   //DEBUG_PARSER = true;
+  JDK_VERSION = "15";
 }
 
 PARSER_BEGIN(JavaParser)
 package parser;
 import java.io.*;
+import pkgAttribute.*;
+import pkgClass.*;
+import pkgMethod.*;
+import pkgMethodCall.*;
+import pkgInterface.*;
+import utility.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JavaParser
 {
-
+	private JavaObjetManager objectManager;
    private InputStream inputStream = null;
 
     /**
      * Constructor for JavaParser.
      * @param fileName name of the file to parse
      */
-   public JavaParser(String filename)
+   public JavaParser(File file, JavaObjetManager objectManager)
    {
-      this(System.in);
+      //this(System.in);
       try {
-          inputStream = new FileInputStream(new File(filename));
+        this.objectManager = objectManager;
+          inputStream = new FileInputStream(file);
+          jj_input_stream = new JavaCharStream(inputStream, 1,1);
+          token_source = new JavaParserTokenManager(jj_input_stream);
           ReInit(inputStream);
       }
       catch(Exception e) {
@@ -71,12 +83,16 @@ public class JavaParser
       }
    }
 
-   JavaParser(JavaCharStream stream) {
+   /*JavaParser(JavaCharStream stream) {
         jj_input_stream = stream;
         token_source = new JavaParserTokenManager(jj_input_stream);
         token = new Token();
         jj_ntk = -1;
-   }
+   }*/
+
+   public JavaObjetManager getObjectManager() {
+		return this.objectManager;
+     }
 
 
   /*
@@ -94,18 +110,64 @@ public class JavaParser
   // the command line:
   // for f in /some/directory/full/of/java/files/*.java; do java -cp . JavaParser $f; done
   public static void main(String args[]) {
-    JavaParser parser;
+    
     if (args.length == 0) {
       System.out.println("Java Parser Version 1.7:  Reading from standard input...");
-      parser = new JavaParser(System.in);
+      //parser = new JavaParser(System.in);
     } else if (args.length == 1) {
-      System.out.println("Java Parser Version 1.7:  Reading from file " + args[0] + "...");
-      try {
-        parser = new JavaParser(new java.io.FileInputStream(args[0]));
-      } catch (java.io.FileNotFoundException e) {
+      File file = new File(args [0]);
+    	List<File> fileList = new ArrayList<File>();
+      //System.out.println("Java Parser Version 1.7:  Reading from file " + args[0] + "...");
+      //try {
+        if(!file.exists()) {
+          	System.out.println("The provided path does not exist.");
+      		System.exit(1);
+          }
+
+          // Check if it is a directory or a single file
+      	if(!file.isFile()) {
+			List<File> javaFiles = JavaFileExplorer.getAllJavaFiles(file, 999);
+			if(javaFiles != null) {
+				fileList.addAll(javaFiles);
+			}
+			else {
+				System.out.println("Error loading files from directory.");
+      	  		System.exit(1);
+			}
+        }
+        else {
+			// when is a file
+			fileList.add(file);
+        }
+
+		JavaObjetManager om = new JavaObjetManager();
+        JavaParser parser;
+        File f = null;
+        int error = 0;
+        for(File fs: fileList) {
+			try {
+				parser = new JavaParser(fs, om);
+				parser.getObjectManager().push(new JavaFile(file));
+				parser.CompilationUnit();
+				System.out.println(String.format("%s: Success", f.getName()));
+			}
+			catch(ParseException e) {
+				error++;
+				System.out.println(String.format("%s: Error: %s", f.getName(), e.getMessage()));
+			}
+        }
+
+		if(error == 0) {
+			JavaInterpreter interpreter = new JavaInterpreter(om);
+			interpreter.debugTree();
+			interpreter.showStatisticToConsole();
+		}
+        
+        //parser = new JavaParser(new java.io.FileInputStream(args[0]));
+      /*} catch (java.io.FileNotFoundException e) {
         System.out.println("Java Parser Version 1.7:  File " + args[0] + " not found.");
         return;
-      }
+      }*/
     } else {
       System.out.println("Java Parser Version 1.7:  Usage is one of:");
       System.out.println("         java JavaParser < inputfile");
@@ -113,13 +175,13 @@ public class JavaParser
       System.out.println("         java JavaParser inputfile");
       return;
     }
-    try {
+    /*try {
       parser.CompilationUnit();
       System.out.println("Java Parser Version 1.7:  Java program parsed successfully.");
     } catch (ParseException e) {
       System.out.println(e.getMessage());
       System.out.println("Java Parser Version 1.7:  Encountered errors during parse.");
-    }
+    }*/
   }
   
   
@@ -442,8 +504,10 @@ TOKEN :
 /**
  * Main entry point for parsing java files.
  */
-void CompilationUnit():
+/*void CompilationUnit():
 {
+  JavaFile currentFile = (JavaFile) objectManager.peek();
+  String buffer = "";
 }
 {
       (
@@ -456,24 +520,63 @@ void CompilationUnit():
            
            <EOF>
        )
+}*/
+void CompilationUnit():
+{
+  JavaFile currentFile = (JavaFile) objectManager.peek();
+  String buffer = "";
+}
+{
+  [ LOOKAHEAD( ( Annotation() )* "package" ) buffer = PackageDeclaration() ]
+  {
+    currentFile.setPkg(buffer);
+  }
+  ( buffer = ImportDeclaration()
+  {
+    currentFile.addImport(new JavaImport(buffer));
+  })*
+  ( TypeDeclaration() )+
+  ( < "\u001a" > )?
+  ( <STUFF_TO_IGNORE: ~[]> )? 
+  <EOF>
 }
 
-
-void PackageDeclaration():
+String PackageDeclaration():
 {
+  String name = "";
+}
+{
+  Modifiers() "package" name = Name() ";"
+  {
+    return name;
+  }
+}
+/*String PackageDeclaration():
+{
+  String name = "";
 }
 {
     
-        <PACKAGE> Name() ";"  
-}
+       <PACKAGE> name = Name() ";"  
+}*/
 
-void  ImportDeclaration():
+String ImportDeclaration():
+{
+  String name = "";
+}
+{
+  "import" [ "static" ] name = Name() [ "." "*" { name += ".*"; } ] ";"
+  {
+	return name;
+  }
+}
+/*void  ImportDeclaration():
 {
 }
 {
     
         <IMPORT> [ <STATIC> ] Name() [ "." "*" ] ";"
-}
+}*/
 
 /*
  * Modifiers. We match all modifiers in a single rule to reduce the chances of
@@ -483,8 +586,45 @@ void  ImportDeclaration():
  * in some constructs. 
  * TODO: write productions for the actual modifiers allowed for each construct.
  */
+int Modifiers():
+{
+   int modifiers = 0;
+}
+{
+ (
+  LOOKAHEAD(2)
+  (
+   "public" { modifiers |= JavaModifierSet.PUBLIC; }
+  |
+   "static" { modifiers |= JavaModifierSet.STATIC; }
+  |
+   "protected" { modifiers |= JavaModifierSet.PROTECTED; }
+  |
+   "private" { modifiers |= JavaModifierSet.PRIVATE; }
+  |
+   "final" { modifiers |= JavaModifierSet.FINAL; }
+  |
+   "abstract" { modifiers |= JavaModifierSet.ABSTRACT; }
+  |
+   "synchronized" { modifiers |= JavaModifierSet.SYNCHRONIZED; }
+  |
+   "native" { modifiers |= JavaModifierSet.NATIVE; }
+  |
+   "transient" { modifiers |= JavaModifierSet.TRANSIENT; }
+  |
+   "volatile" { modifiers |= JavaModifierSet.VOLATILE; }
+  |
+   "strictfp" { modifiers |= JavaModifierSet.STRICTFP; }
+  |
+   Annotation()
+  )
+ )*
 
-void Modifiers():
+ {
+    return modifiers;
+ }
+}
+/*void Modifiers():
 {
 }
 {
@@ -516,7 +656,7 @@ void Modifiers():
    Annotation()
   )
  )*
-}
+}*/
 
 /*
  * Declaration syntax follows.
@@ -525,24 +665,81 @@ void Modifiers():
 // Handle classes, interfaces, enums, and annotations.
 void TypeDeclaration():
 {
+  int modifiers;
 }
 {
     
 
           ";"
         |
-          Modifiers()
+         modifiers = Modifiers()
           (
               LOOKAHEAD(2)
-             ClassOrInterfaceDeclaration()
+             ClassOrInterfaceDeclaration(modifiers)
            | 
-             EnumDeclaration()
+             EnumDeclaration(modifiers)
            | 
-             AnnotationTypeDeclaration()
+             AnnotationTypeDeclaration(modifiers)
           )
 }
 
-void ClassOrInterfaceDeclaration():
+void ClassOrInterfaceDeclaration(int modifiers):
+{	
+   	boolean isInterface = false;
+   	Token nameToken;
+   	List<String> extendsList = new ArrayList<String>();
+   	List<String> implementsList = new ArrayList<String>();
+}
+{
+  ( "class" | "interface" { isInterface = true; } )
+  nameToken = <IDENTIFIER>
+  [ TypeParameters() ]
+  [ extendsList = ExtendsList(isInterface) ]
+  [ implementsList = ImplementsList(isInterface) ]
+
+  {
+    if(isInterface)
+    {
+      //NOTE: We are in an interface, there's no implements
+      // but extendsList might contain multiple values
+      JavaInterface i = new JavaInterface(nameToken.toString());
+	  i.setiScope(modifiers);
+	  //NOTE: We add each interface it inherits from	
+      for(int j = 0; j < extendsList.size(); j++)
+      {
+        i.addInterface(new JavaInterface(extendsList.get(j)));
+      }	
+      //NOTE: Pass to the object manager
+      objectManager.addToCurrentObject(i);
+    }
+    else
+    {
+      //NOTE: We are in a class, limited to extendsList(0) unless its null
+      JavaClass c = new JavaClass(nameToken.toString());
+      c.setcScope(modifiers);
+      if(extendsList.size() > 0)
+      {
+        c.setSuperClass(extendsList.get(0));
+      }
+	  //NOTE: We add each interface	
+      for(int i = 0; i < implementsList.size(); i++)
+      {
+        c.addInterface(new JavaInterface(implementsList.get(i)));
+      }
+      //NOTE: Pass to the object manager
+      objectManager.addToCurrentObject(c);
+    }
+  }
+
+  ClassOrInterfaceBody(isInterface)
+
+  //NOTE: We're not inside a class or an interface anymore
+  {
+    objectManager.pop();
+  }
+}
+
+/*void ClassOrInterfaceDeclaration():
 {
 }
 {
@@ -560,10 +757,34 @@ void ClassOrInterfaceDeclaration():
       legal since the beginning of Java, some sort of a C hold-over.  Sun's latest
       Java 1.5 compiler doesn't mind it, but this parser whined if the class has a
       semi-colon after the last }. */
-      [ LOOKAHEAD(2) <SEMICOLON> ]
+      //[ LOOKAHEAD(2) <SEMICOLON> ]
+//}
+
+List<String> ExtendsList(boolean isInterface):
+{
+   List<String> extendsList = new ArrayList<String>();
+   String currentExtent = "";
+   boolean extendsMoreThanOne = false;
+}
+{
+   "extends" currentExtent = ClassOrInterfaceType()
+   {
+     extendsList.add(currentExtent);
+   }
+   ( "," currentExtent = ClassOrInterfaceType()
+   {
+     extendsMoreThanOne = true;
+   	 extendsList.add(currentExtent);
+   } )*
+   {
+      if (extendsMoreThanOne && !isInterface)
+         throw new ParseException("A class cannot extend more than one other class");
+
+      return extendsList;
+   }
 }
 
-void ExtendsList():
+/*void ExtendsList():
 {
 }
 {
@@ -572,9 +793,30 @@ void ExtendsList():
        "extends" ClassOrInterfaceType()
        ( "," ClassOrInterfaceType() )*
 
-}
+}*/
 
-void ImplementsList():
+List<String> ImplementsList(boolean isInterface):
+{
+	List<String> implementsList = new ArrayList<String>();
+   	String currentImplement = "";
+}
+{
+   "implements" currentImplement = ClassOrInterfaceType()
+   {
+     implementsList.add(currentImplement);
+   }
+   ( "," currentImplement = ClassOrInterfaceType()
+   {
+     implementsList.add(currentImplement);
+   } )*
+   {
+      if (isInterface) { 
+         throw new ParseException("An interface cannot implement other interfaces");
+	}
+      return implementsList;
+   }
+}
+/*void ImplementsList():
 {
 }
 {
@@ -583,15 +825,15 @@ void ImplementsList():
         "implements" ClassOrInterfaceType()
        ( "," ClassOrInterfaceType() )*
 
-}
+}*/
 
-void EnumDeclaration():
+void EnumDeclaration(int modifiers):
 {
 }
 {
     
         "enum" <IDENTIFIER>
-        [ ImplementsList() ]
+        [ ImplementsList(false) ]
         EnumBody()
 
 }
@@ -603,7 +845,7 @@ void EnumBody():
     
         "{"
         EnumConstant() ( LOOKAHEAD(2) "," EnumConstant() )* [","]
-        [ ";" ( ClassOrInterfaceBodyDeclaration() )* ]
+        [ ";" ( ClassOrInterfaceBodyDeclaration(false) )* ]
         "}"
 }
 
@@ -612,7 +854,7 @@ void EnumConstant():
 }
 {
     
-        <IDENTIFIER> [ Arguments() ] [ ClassOrInterfaceBody() ]
+        <IDENTIFIER> [ Arguments() ] [ ClassOrInterfaceBody(false) ]
 }
 
 void TypeParameters():
@@ -660,7 +902,7 @@ void TypeBound():
         )
 }
 
-void ClassOrInterfaceBody():
+void ClassOrInterfaceBody(boolean isInterface):
 {
 }
 {
@@ -669,13 +911,47 @@ void ClassOrInterfaceBody():
         (
             "{"
             (
-                ClassOrInterfaceBodyDeclaration()
+                ClassOrInterfaceBodyDeclaration(isInterface)
             )*
             "}"
         )
 }
 
-void ClassOrInterfaceBodyDeclaration():
+void ClassOrInterfaceBodyDeclaration(boolean isInterface):
+{
+   boolean isNestedInterface = false;
+   int modifiers;
+}
+{
+  LOOKAHEAD(2)
+  Initializer()
+  {
+     if (isInterface)
+        throw new ParseException("An interface cannot have initializers");
+  }
+|
+  modifiers = Modifiers() // Just get all the modifiers out of the way. If you want to do
+              // more checks, pass the modifiers down to the member
+  (
+      ClassOrInterfaceDeclaration(modifiers)
+    |
+      EnumDeclaration(modifiers)
+    |
+      LOOKAHEAD( [ TypeParameters() ] <IDENTIFIER> "(" )
+      ConstructorDeclaration(modifiers)
+    |
+      LOOKAHEAD( Type() <IDENTIFIER> ( "[" "]" )* ( "," | "=" | ";" ) )
+      FieldDeclaration(modifiers)
+    |
+      MethodDeclaration(modifiers)
+    |
+      AnnotationTypeDeclaration(modifiers)
+  )
+|
+  ";"
+}
+
+/*void ClassOrInterfaceBodyDeclaration():
 {
 }
 {
@@ -707,9 +983,33 @@ void ClassOrInterfaceBodyDeclaration():
         |
           ";"  
           )
+}*/
+
+void FieldDeclaration(int modifiers):
+{
+  JavaAttribute a = new JavaAttribute();
+  a.setaScope(modifiers);
+  String type = "";
+  String name = "";
+}
+{
+  // Modifiers are already matched in the caller
+  type = Type() name = VariableDeclarator()
+  {
+    a.setaName(name);
+    a.setaType(type);
+    objectManager.addToCurrentObject(a);
+  }
+   ( "," VariableDeclarator()
+   {
+      //NOTE(): Type and modifiers are already defined		
+      a.setaName(name);
+      objectManager.addToCurrentObject(a);
+   }
+    )* ";"
 }
 
-void FieldDeclaration():
+/*void FieldDeclaration():
 {
 }
 {
@@ -723,9 +1023,20 @@ void FieldDeclaration():
             )*
             ";"
         )
+}*/
+
+String VariableDeclarator():
+{
+  String name = "";
+}
+{
+  name = VariableDeclaratorId() [ "=" VariableInitializer() ]
+  {
+    return name;
+  }
 }
 
-void VariableDeclarator():
+/*void VariableDeclarator():
 {
 }
 {
@@ -733,9 +1044,20 @@ void VariableDeclarator():
         (
             VariableDeclaratorId() [ "=" VariableInitializer() ]
         )
+}*/
+
+String VariableDeclaratorId():
+{
+	Token nameToken;
+}
+{
+  nameToken = <IDENTIFIER> ( "[" "]" )*
+  {
+    return nameToken.toString();
+  }
 }
 
-void VariableDeclaratorId():
+/*void VariableDeclaratorId():
 {
 }
 {
@@ -744,7 +1066,7 @@ void VariableDeclaratorId():
         ( 
             "[" "]" 
         )*
-}
+}*/
 
 void VariableInitializer():
 {
@@ -767,7 +1089,30 @@ void ArrayInitializer():
 
 }
 
-void MethodDeclaration():
+void MethodDeclaration(int modifiers):
+{
+  JavaMethod m;
+  String returnType = "";
+}
+{
+  // Modifiers already matched in the caller!
+  [ TypeParameters() ]
+  returnType = ResultType()
+  m = MethodDeclarator() [ "throws" NameList() ]
+  {
+    m.setmTypeReturn(returnType);
+    objectManager.addToCurrentObject(m);
+  }
+  //NOTE: We're about to enter the method body, method is on top of stack
+  ( Block()
+  //NOTE: We left the method body, so let's pop the method out
+  {
+    objectManager.pop();
+  }
+  | ";" )
+}
+
+/*void MethodDeclaration():
 {
 }
 {
@@ -779,9 +1124,24 @@ void MethodDeclaration():
           MethodDeclarator() [ "throws" NameList() ]
           ( Block() | ";" )
         )
+}*/
+
+JavaMethod MethodDeclarator():
+{
+	Token nameToken;
+	List<JavaAttribute> parameters;
+}
+{
+  nameToken = <IDENTIFIER> parameters = FormalParameters() ( "[" "]" )*
+
+  {
+    JavaMethod m = new JavaMethod(nameToken.toString());
+    m.addParameters(parameters);
+    return m;
+  }
 }
 
-void MethodDeclarator():
+/*void MethodDeclarator():
 {
 }
 {
@@ -789,9 +1149,30 @@ void MethodDeclarator():
         (
             <IDENTIFIER> FormalParameters() ( "[" "]" )*
         )
+}*/
+
+List<JavaAttribute> FormalParameters():
+{
+	List<JavaAttribute> parameters = new ArrayList<JavaAttribute>();
+	JavaAttribute buffer;
+}
+{
+  "(" [ buffer = FormalParameter()
+  {
+    parameters.add(buffer);
+  }
+   ( "," buffer = FormalParameter()
+   {
+     parameters.add(buffer);
+   }
+    )* ] ")"
+
+  {
+    return parameters;
+  }	  
 }
 
-void FormalParameters():
+/*void FormalParameters():
 {
 }
 {
@@ -807,9 +1188,25 @@ void FormalParameters():
          ]
          ")"
         )
+}*/
+
+JavaAttribute FormalParameter():
+{
+	int modifiers;
+	String type = "";
+	String name = "";
+}
+{
+  // danson, added
+  //          [ "final" | Annotation() ]
+  // See Java Language Specification, 3rd Edition, section 8.4.1
+  modifiers = Modifiers() [ "final" | Annotation() ] type = Type() [ "..." ] name = VariableDeclaratorId()
+  {
+    return new JavaAttribute(name, type, modifiers);
+  }
 }
 
-void FormalParameter():
+/*void FormalParameter():
 {
 }
 {
@@ -822,9 +1219,37 @@ void FormalParameter():
        ]
        VariableDeclaratorId()
       )
+}*/
+
+void ConstructorDeclaration(int modifiers):
+{
+	List<JavaAttribute> parameters;
+	Token nameToken;
+}
+{
+  [ TypeParameters() ]
+  // Modifiers matched in the caller
+  nameToken = <IDENTIFIER> parameters = FormalParameters() [ "throws" NameList() ]
+  "{"
+    [ LOOKAHEAD(ExplicitConstructorInvocation())
+         ExplicitConstructorInvocation()
+    ]
+    {
+      JavaMethod m = new JavaMethod(nameToken.toString());
+      m.addParameters(parameters);
+      m.setmScope(modifiers);
+      objectManager.addToCurrentObject(m);
+    }
+    //NOTE: We're entering the constructor body, it is on top of stack
+    ( BlockStatement() )*
+    //NOTE: We're exiting the constructor body, lets pop out the method
+    {
+      objectManager.pop();
+    }
+  "}"
 }
 
-void ConstructorDeclaration():
+/*void ConstructorDeclaration():
 {
 }
 {
@@ -838,9 +1263,17 @@ void ConstructorDeclaration():
             ( BlockStatement() )*
             "}"
         )
-}
+}*/
+
 
 void ExplicitConstructorInvocation():
+{}
+{
+  ( <IDENTIFIER> "." )* [ LOOKAHEAD(2) "this" "." ]
+  [ TypeArguments() ] ("this"|"super") Arguments() ";"
+}
+
+/*void ExplicitConstructorInvocation():
 {
 }
 {
@@ -849,7 +1282,7 @@ void ExplicitConstructorInvocation():
           "this" Arguments() ";"
         |
         [ LOOKAHEAD(2) PrimaryExpression() "." ] "super" Arguments() ";"
-}
+}*/
 
 void Initializer():
 {
@@ -859,7 +1292,24 @@ void Initializer():
         [ <STATIC> ] Block()
 }
 
-void Type():
+String Type():
+{
+  String name = "";
+}
+{
+   (
+     LOOKAHEAD(2) name = ReferenceType()
+ |
+   name = PrimitiveType()
+   )
+
+   {
+     return name;
+   }
+
+}
+
+/*void Type():
 {
 }
 {
@@ -869,9 +1319,24 @@ void Type():
         |
          PrimitiveType()
         )
+}*/
+
+String ReferenceType():
+{
+  String name = "";
+}
+{
+   (
+     name = PrimitiveType() ( LOOKAHEAD(2) "[" "]" )+
+  |
+   ( name = ClassOrInterfaceType() ) ( LOOKAHEAD(2) "[" "]" )*)
+
+   {
+     return name;
+   }
 }
 
-void ReferenceType():
+/*void ReferenceType():
 {
 }
 {
@@ -882,9 +1347,22 @@ void ReferenceType():
         |
         ( ClassOrInterfaceType() ) ( LOOKAHEAD(2) "[" "]")*
         )
+}*/
+
+
+String ClassOrInterfaceType():
+{
+  Token nameToken;
+}
+{
+  nameToken = <IDENTIFIER> [ LOOKAHEAD(2) TypeArguments() ]
+  ( LOOKAHEAD(2) "." <IDENTIFIER> [ LOOKAHEAD(2) TypeArguments() ] )*
+  {
+    return nameToken.toString();
+  }
 }
 
-void ClassOrInterfaceType():
+/*void ClassOrInterfaceType():
 {
 }
 {
@@ -895,7 +1373,7 @@ void ClassOrInterfaceType():
               <IDENTIFIER> [ LOOKAHEAD(2) TypeArguments() ]
           )*
         )
-}
+}*/
 
 void TypeArguments():
 {
@@ -937,7 +1415,34 @@ void WildcardBounds():
         )
 }
 
-void PrimitiveType():
+String PrimitiveType():
+{
+  Token nameToken;
+}
+{
+  (
+    nameToken = "boolean"
+|
+  nameToken = "char"
+|
+  nameToken = "byte"
+|
+  nameToken = "short"
+|
+  nameToken = "int"
+|
+  nameToken = "long"
+|
+  nameToken = "float"
+|
+  nameToken = "double")
+
+  {
+    return nameToken.toString();
+  }
+}
+
+/*void PrimitiveType():
 {
 }
 {
@@ -959,9 +1464,26 @@ void PrimitiveType():
             | 
               "double" 
         )
+}*/
+
+String ResultType():
+{
+	Token nameToken;
+	String name = "";
+}
+{
+  nameToken = "void"
+  {
+    return nameToken.toString();
+  }
+|
+  name = Type()
+  {
+    return name;
+  }
 }
 
-void ResultType():
+/*void ResultType():
 {
 }
 {
@@ -972,14 +1494,39 @@ void ResultType():
         |
           Type()
           )
-}
+}*/
 
-void Name():
+String Name():
 /*
  * A lookahead of 2 is required below since "Name" can be followed
  * by a ".*" when used in the context of an "ImportDeclaration".
  */
 {
+  Token nameToken;
+  String buffer = "";
+}
+{
+  nameToken = <IDENTIFIER>
+  {
+    buffer = nameToken.toString();
+  }
+  ( LOOKAHEAD(2) "." nameToken = <IDENTIFIER>
+  {
+    buffer += "." + nameToken.toString();
+  }
+  )*
+
+  {
+    return buffer;
+  }
+}
+
+//void Name():
+/*
+ * A lookahead of 2 is required below since "Name" can be followed
+ * by a ".*" when used in the context of an "ImportDeclaration".
+ */
+/*{
 }
 {
     
@@ -989,7 +1536,7 @@ void Name():
             LOOKAHEAD(2)
             "." <IDENTIFIER>
         )*
-}
+}*/
 
 void NameList():
 {
@@ -1216,6 +1763,24 @@ void CastExpression():
  */
 void PrimaryExpression():
 {
+	String method = "";
+	String buffer = "";
+}
+{
+  method = PrimaryPrefix() ( LOOKAHEAD(2)  buffer = PrimarySuffix()
+  {
+      method += buffer;
+  } )*
+  {
+    if(method.split("[\\.]").length > 1)
+    {
+      objectManager.addToCurrentObject(new JavaMethodCall(method));
+    }
+  }
+}
+
+/*void PrimaryExpression():
+{
 }
 {
     
@@ -1223,7 +1788,7 @@ void PrimaryExpression():
         ( LOOKAHEAD(2)
             PrimarySuffix()
         )*
-}
+}*/
 
 void MemberSelector():
 {
@@ -1233,7 +1798,40 @@ void MemberSelector():
         "." TypeArguments() <IDENTIFIER>
 }
 
-void PrimaryPrefix():
+String PrimaryPrefix():
+{
+  	String nameToken = null;
+	String name = "";
+}
+{(
+  Literal()
+|
+  LOOKAHEAD( ( <IDENTIFIER> "." )* "this" )
+  ( <IDENTIFIER> "." )*
+  "this"
+|
+  "super" "." <IDENTIFIER>
+|
+   // danson, added this part to support a construct like:
+   //   Buffer.super.setDirty(true);
+   // See Java Language Specification, 3rd edition, section 15.11.2.
+   LOOKAHEAD( ClassOrInterfaceType() "." "super" "." <IDENTIFIER> )
+   ClassOrInterfaceType() "." "super" "." <IDENTIFIER>
+|
+  "(" Expression() ")"
+|
+  AllocationExpression()
+|
+  LOOKAHEAD( ResultType() "." "class" )
+  ResultType() "." "class"
+|
+  name = Name())
+  {
+    return name;
+  }
+}
+
+/*void PrimaryPrefix():
 {
 }
 {
@@ -1258,9 +1856,41 @@ void PrimaryPrefix():
           ResultType() "." "class"
         |
           Name()
+}*/
+
+String PrimarySuffix():
+{
+	Token nameToken = null;
+}
+{
+  (
+    LOOKAHEAD("." "super" ".")
+  "." "super"
+|
+  LOOKAHEAD("." "this")
+  "." "this"
+|
+  LOOKAHEAD(2)
+  "." AllocationExpression()
+|
+  LOOKAHEAD(3)
+  MemberSelector()
+|
+  "[" Expression() "]"
+|
+  "." nameToken = <IDENTIFIER>
+|
+  Arguments()
+  {
+    return "()";
+  })
+
+  {
+    return nameToken == null ? "" : String.format(".%s", nameToken.toString());
+  }
 }
 
-void PrimarySuffix():
+/*void PrimarySuffix():
 {
 }
 {
@@ -1279,7 +1909,7 @@ void PrimarySuffix():
           "." <IDENTIFIER>
         |
           Arguments()
-}
+}*/
 
 void Literal():
 {}
@@ -1340,7 +1970,7 @@ void AllocationExpression():
             (
                 ArrayDimsAndInits() 
             |
-                Arguments() [ ClassOrInterfaceBody() ]
+                Arguments() [ ClassOrInterfaceBody(false) ]
             )
 }
 
@@ -1441,11 +2071,28 @@ void BlockStatement():
           LOOKAHEAD(3)
           Statement()
         |
-          ClassOrInterfaceDeclaration()
+          ClassOrInterfaceDeclaration(0)
              )
 }
 
 void LocalVariableDeclaration():
+{
+	int modifiers;
+	String type;
+	String name;
+}
+{
+  modifiers = Modifiers() type = Type() name = VariableDeclarator()
+  {
+    objectManager.addToCurrentObject(new JavaAttribute(name, type, modifiers));
+  }
+  ( "," name = VariableDeclarator()
+  {
+    objectManager.addToCurrentObject(new JavaAttribute(name, type, modifiers));
+  } )*
+}
+
+/*void LocalVariableDeclaration():
 {
 
 }
@@ -1457,7 +2104,7 @@ void LocalVariableDeclaration():
       [LOOKAHEAD(2) Annotation()] Modifiers() Type() VariableDeclarator()
       ( "," VariableDeclarator()
       )*
-}
+}*/
 
 void EmptyStatement():
 {}
@@ -1770,7 +2417,7 @@ void  MemberValueArrayInitializer():
 
 /* Annotation Types. */
 
-void AnnotationTypeDeclaration():
+void AnnotationTypeDeclaration(int modifiers):
 {
 }
 {
@@ -1788,23 +2435,24 @@ void AnnotationTypeBody():
 
 void AnnotationTypeMemberDeclaration():
 {
+  int modifiers;
 }
 {
- Modifiers()
+	modifiers = Modifiers()
  
      (
          LOOKAHEAD(Type() <IDENTIFIER> "(")
          Type() <IDENTIFIER> "(" ")" [ DefaultValue() ] ";" 
          |
          LOOKAHEAD(3)
-         ClassOrInterfaceDeclaration()
+         ClassOrInterfaceDeclaration(modifiers)
          |
-         EnumDeclaration()
+         EnumDeclaration(modifiers)
          |
          LOOKAHEAD(2)
-         AnnotationTypeDeclaration()
+         AnnotationTypeDeclaration(modifiers)
          |
-         FieldDeclaration()
+         FieldDeclaration(modifiers)
      )
      |
      ( ";" )

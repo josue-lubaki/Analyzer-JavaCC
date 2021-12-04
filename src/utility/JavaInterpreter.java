@@ -32,7 +32,7 @@ public class JavaInterpreter {
         StringBuilder sbInheritance = new StringBuilder();
         JavaModifierSet modifiersHelpers = new JavaModifierSet();
 
-        int fileCount = objectManager.size();
+        //int fileCount = objectManager.size();
 
         objectManager.stream().forEach(obj -> {
             JavaFile file = (JavaFile) obj;
@@ -224,16 +224,17 @@ public class JavaInterpreter {
 			for(Object o : objectManager){
 			    JavaFile f = (JavaFile)o;
 			    for(JavaClass c : f.getListClasses()){
-				System.out.println(String.format("CLASS: %s", c.getcName()));
-				for(JavaAttribute a : c.getListAttributes()){
-				    System.out.println(String.format("\tATTR: %s : %s", a.getaName(), a.getaType()));
-				}
-				for(JavaMethod m : c.getListMethods()){
-				    System.out.println(String.format("\tMETHOD: %s -> %s", m.getmName(), m.getmTypeReturn()));
-				    for(JavaMethodCall mc : m.getListMethodCalls()){
-					System.out.println(String.format("\t\tCALL: %s", mc.getRawCall()));
-				    }
-				}
+					System.out.println(String.format("CLASS: %s", c.getcName()));
+					for(JavaAttribute a : c.getListAttributes()){
+					    System.out.println(String.format("\tATTR: %s : %s", a.getaName(), a.getaType()));
+					}
+					
+					for(JavaMethod m : c.getListMethods()){
+					    System.out.println(String.format("\tMETHOD: %s -> %s", m.getmName(), m.getmTypeReturn()));
+					    for(JavaMethodCall mc : m.getListMethodCalls()){
+					    	System.out.println(String.format("\t\tCALL: %s", mc.getRawCall()));
+					    }
+					}
 			    }
 			}
 		 }

@@ -246,6 +246,8 @@ public interface JavaParserConstants {
   int RSIGNEDSHIFT = 126;
   /** RegularExpression Id. */
   int GT = 127;
+  /** RegularExpression Id. */
+  int STUFF_TO_IGNORE = 129;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -386,6 +388,8 @@ public interface JavaParserConstants {
     "\">>>\"",
     "\">>\"",
     "\">\"",
+    "\"\\u001a\"",
+    "<STUFF_TO_IGNORE>",
   };
 
 }

@@ -34,6 +34,10 @@ public class JavaFile implements IClass, IInterface {
 	public void addClass(JavaClass jClass) {
 		this.listClasses.add(jClass);
 	}
+	
+	public void addImport(JavaImport imp) {
+		this.listImports.add(imp);
+	}
 
 	public File getFile() {
 		return file;
