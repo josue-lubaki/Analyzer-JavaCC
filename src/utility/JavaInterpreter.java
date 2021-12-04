@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import pkgAttribute.JavaAttribute;
 import pkgClass.JavaClass;
+import pkgMethod.JavaMethod;
+import pkgMethodCall.JavaMethodCall;
 
 /**
  * C'est la classe qui permet d'interpreter le resultat obtenue par l'analyse
@@ -105,6 +108,66 @@ public class JavaInterpreter {
                     sbModifier.append("\tPas de Variables\n");
 
                 // TODO Method Analysis
+                for(JavaMethod method : currentClass.getListMethods()) {
+                	// recuperer le nom de la methode
+                	sbCall.append(String.format("\t%s: \n", method.getmName()));
+                	
+                	for(JavaMethodCall methodCall : method.getListMethodCalls()) {
+                		// Verifier si la method est appele par une variable d'instance ou sinon c'est une method statique de la classe
+                		JavaAttribute attr = method.getListLocalVariables().stream().filter(m -> {
+                			return m.getaName().equalsIgnoreCase(methodCall.getObj());
+                		})
+                		.findAny()
+                			.orElseGet(() -> 
+	                			currentClass.getListAttributes().stream().filter(a -> {
+	                				return a.getaName().equalsIgnoreCase(methodCall.getObj());
+                			}).findAny()
+	                			.orElse(null));
+                		
+                		// verification de l'heritage / recuperation de tous les parents
+                		JavaClass parent = currentClass.getcParent();
+                		while(attr == null && parent != null) {
+                			attr = parent.getListAttributes()
+                					.stream()
+                					.filter(a -> a.getaName().equalsIgnoreCase(methodCall.getObj()))
+                					.findAny()
+                					.orElse(null);
+                			parent = parent.getcParent();
+                		}
+                		
+                		JavaClass otherClass = getClassByName(attr != null ? attr.getaType() : methodCall.getObj());
+                		
+                		for(int pos = 1; pos < methodCall.getLength(); pos++) {
+                			if(otherClass == null) break;
+                			
+                			String call = methodCall.getCall(pos);
+                			if(call.contains("()")) {
+                				sbCall.append(String.format("\t\t%s.%s\n", otherClass.getcName(), call));
+                				
+                				int couplingSize = coupling.getOrDefault(otherClass.getcName(), 0);
+                				coupling.put(otherClass.getcName(), couplingSize + 1);
+                				
+                				List<JavaMethod> methodList = otherClass.getListMethods();
+                				otherClass = null;
+                				for(JavaMethod nextMethod : methodList) {
+                					if(nextMethod.getmName().equalsIgnoreCase(call.replace("()", ""))) {
+                						otherClass = getClassByName(nextMethod.getmTypeReturn());
+                						break;
+                					}
+                				}
+                			}
+                			else {
+                				List<JavaAttribute> attributeList = otherClass.getListAttributes();
+                				otherClass = null;
+                				for(JavaAttribute nextAttribute : attributeList) {
+                					if(nextAttribute.getaName().equalsIgnoreCase(call)) {
+                						otherClass = this.getClassByName(nextAttribute.getaType());
+                					}
+                				}
+                			}
+                		}
+                	}
+                }
 
                 // Coupling
                 if (!coupling.entrySet().isEmpty()) {
@@ -138,5 +201,41 @@ public class JavaInterpreter {
     	System.out.println("==========================================");
     	System.out.println(sbCall.toString());
     }
+
+	private JavaClass getClassByName(String name) {
+		for(Object f: objectManager) {
+			JavaFile file = (JavaFile)f;
+			Optional<JavaClass> classes =  file.getListClasses()
+					.stream()
+					.filter(c -> c.getcName().equals(name))
+					.findAny();
+			
+			if(classes.isPresent()) {
+				return classes.get();
+			}
+		}
+		return null;
+	}
+	
+	 public void debugTree(){
+			System.out.println("==========================================");
+			System.out.println("============== DEBUG =====================");
+			System.out.println("==========================================");
+			for(Object o : objectManager){
+			    JavaFile f = (JavaFile)o;
+			    for(JavaClass c : f.getListClasses()){
+				System.out.println(String.format("CLASS: %s", c.getcName()));
+				for(JavaAttribute a : c.getListAttributes()){
+				    System.out.println(String.format("\tATTR: %s : %s", a.getaName(), a.getaType()));
+				}
+				for(JavaMethod m : c.getListMethods()){
+				    System.out.println(String.format("\tMETHOD: %s -> %s", m.getmName(), m.getmTypeReturn()));
+				    for(JavaMethodCall mc : m.getListMethodCalls()){
+					System.out.println(String.format("\t\tCALL: %s", mc.getRawCall()));
+				    }
+				}
+			    }
+			}
+		 }
 
 }

@@ -29,5 +29,9 @@ public class JavaMethodCall {
 	public String getLastCall() {
 		return getCall(getLength() - 1);
 	}
+	
+	public String getObj() {
+		return splittedCall.length > 0 ? splittedCall[0] : "";
+	}
 
 }
