@@ -31,7 +31,7 @@ public class JavaClass implements IClass, IAttribute, IInterface, IMethod {
 		this.listInterfaces = new ArrayList<>();
 	}
 
-	// methode qui vérifie si cParent a des superClass
+	// methode qui verifie si cParent a des superClass
 	public boolean hasSuperClass() {
 		return this.cParent != null;
 	}

@@ -45,6 +45,13 @@ public class JavaAttribute {
 		this.aScope = aScope;
 	}
 	
+	public boolean isPrimitive() {
+		return aType.equalsIgnoreCase("int") || aType.equalsIgnoreCase("boolean") 
+				|| aType.equalsIgnoreCase("char") || aType.equalsIgnoreCase("byte") 
+				|| aType.equalsIgnoreCase("short") || aType.equalsIgnoreCase("float")
+				|| aType.equalsIgnoreCase("double") || aType.equalsIgnoreCase("long");
+	}
+	
 	
 
 }
