@@ -118,7 +118,6 @@ public class JavaParser implements JavaParserConstants {
 
                         if(error == 0) {
                                 JavaInterpreter interpreter = new JavaInterpreter(om);
-                                interpreter.debugTree();
                                 interpreter.showStatisticToConsole();
                         }
         }

@@ -17,6 +17,16 @@ import pkgMethodCall.JavaMethodCall;
  * 
  */
 public class JavaInterpreter {
+	public static final String RESET = "\033[0m";  // Text Reset
+	public static final String GREEN_BOLD = "\033[1;32m";  // GREEN
+	public static final String YELLOW_BOLD = "\033[1;33m"; // YELLOW
+	public static final String YELLOW_UNDERLINED = "\033[4;33m"; // YELLOW
+	public static final String YELLOW_BOLD_BRIGHT = "\033[1;93m";// YELLOW
+	public static final String RED_BOLD = "\033[1;31m";    // RED
+	public static final String RED = "\033[0;31m";     // RED
+	public static final String GREEN_BOLD_BRIGHT = "\033[1;92m"; // GREEN
+	public static final String WHITE_BOLD = "\033[1;37m";  // WHITE
+	public static final String WHITE_BOLD_BRIGHT = "\033[1;97m"; // WHITE
 	private final JavaObjetManager objectManager;
 
 	// constructor
@@ -44,12 +54,11 @@ public class JavaInterpreter {
 
 				// Affichage des Titres
 				Map<String, Integer> coupling = new HashMap<>();
-				sbModifier.append(String.format("Q1 |> Voici les statistiques de l'Analyse de la portee des attributs pour la classe %s\n", currentClass.getcName()));
-				sbVisibility.append(String.format("Q2 |> Voici les statistiques de l'Analyse de la visibilite de la classe %s\n",currentClass.getcName()));
-				sbCoupling.append(String.format("Q4 |> Voici les statistiques de l'Analyse sur le couplage pour la classe %s\n",currentClass.getcName()));
-				sbCall.append(String.format(
-						"Q5/ Voici les statistiques de l'analyse de graphe d'appel direct entre methodes pour la classe %s\n",currentClass.getcName()));
-				sbInheritance.append("Q3 |> Voici les statistiques de l'analyse portant sur l'heritage:\n");
+				sbModifier.append(YELLOW_BOLD + "Q1 |> Voici les statistiques de l'Analyse de la portee des attributs pour la classe " + YELLOW_BOLD_BRIGHT).append(currentClass.getcName()).append(RESET).append("\n");
+				sbVisibility.append(YELLOW_BOLD + "Q2 |> Voici les statistiques de l'Analyse de la visibilite de la classe " + YELLOW_BOLD_BRIGHT).append(currentClass.getcName()).append(RESET).append("\n");
+				sbCoupling.append(YELLOW_BOLD + "Q4 |> Voici les statistiques de l'Analyse sur le couplage pour la classe " + YELLOW_BOLD_BRIGHT).append(currentClass.getcName()).append(RESET).append("\n");
+				sbCall.append(YELLOW_BOLD + "Q5/ Voici les statistiques de l'analyse de graphe d'appel direct entre methodes pour la classe " + YELLOW_BOLD_BRIGHT).append(currentClass.getcName()).append(RESET);
+				sbInheritance.append(YELLOW_BOLD + "Q3 |> Voici les statistiques de l'analyse portant sur l'heritage de la classe " + YELLOW_BOLD_BRIGHT).append(currentClass.getcName()).append(RESET).append("\n");
 
 				if (!currentClass.hasSuperClass())
 					sbInheritance
@@ -77,34 +86,35 @@ public class JavaInterpreter {
 						if (!listAssociations.contains(attr.getaType())
 								&& !currentClass.getcName().equalsIgnoreCase(attr.getaType())) {
 							listAssociations.add(attr.getaType());
-							sbInheritance.append(String.format("\t\t%s\n", attr.getaType()));
+							sbInheritance.append(String.format("\t\t- %s\n", attr.getaType()));
 						}
 					}
 				} // end for
 
 				double total = nbrePublicAttribute + nbrePrivateAttribute + nbreProtectedAttribute;
 				if (total > 0) {
-					sbModifier.append(
-							String.format("\tPourcentage des attributs publics: %.2f%s\n", ((double) nbrePublicAttribute / total * 100), "%"));
-					sbModifier.append(String.format("\tPourcentage des attributs Protected: %.2f%s\n",
-							((double) nbreProtectedAttribute / total * 100), "%"));
-					sbModifier.append(
-							String.format("\tPourcentage des attributs Private: %.2f%s\n", ((double) nbrePrivateAttribute / total * 100), "%"));
+					double pPublic = (nbrePublicAttribute / total) * 100;
+					double pProtected = (nbreProtectedAttribute / total) * 100;
+					double pPrivate = (nbrePrivateAttribute / total) * 100;
+
+					sbModifier.append("\tPourcentage des attributs Private: " + GREEN_BOLD).append(pPrivate).append("%").append(RESET).append("\n");
+					sbModifier.append("\tPourcentage des attributs publics: " + GREEN_BOLD).append(pPublic).append("%").append(RESET).append("\n");
+					sbModifier.append("\tPourcentage des attributs Protected: " + GREEN_BOLD).append(pProtected).append("%").append(RESET).append("\n");
 
 					total = nbrePrimitiveAttribute + nbreReferenceAttribute;
+					double pSimple = (nbrePrimitiveAttribute / total ) * 100;
+					double pReference = (nbreReferenceAttribute / total) * 100;
 
 					sbVisibility.append("\t% des attributs de type simple et % des attributs de référence (objet) :\n");
-					sbVisibility.append(String.format("\t\tSimple Type: %.2f%s\n",
-							((double) nbrePrimitiveAttribute / total * 100), "%"));
-					sbVisibility.append(String.format("\t\tRéférence Type: %.2f%s\n",
-							((double) nbreReferenceAttribute / total * 100), "%"));
+					sbVisibility.append("\t\tSimple Type: " + GREEN_BOLD).append(pSimple).append("%").append(RESET).append("\n");
+					sbVisibility.append("\t\tRéférence Type: " + GREEN_BOLD).append(pReference).append("%").append(RESET).append("\n");
 
 					sbVisibility.append("\tclasse à visibilité permanente : \n");
 					for (JavaAttribute attr : currentClass.getListAttributes()) {
 						if (!listVisibility.contains(attr.getaType())
 								&& !currentClass.getcName().equalsIgnoreCase(attr.getaType())) {
 							listVisibility.add(attr.getaType());
-							sbVisibility.append(String.format("\t\t%s\n", attr.getaType()));
+							sbVisibility.append(String.format("\t\t- %s\n", attr.getaType()));
 						}
 					}
 
@@ -115,7 +125,8 @@ public class JavaInterpreter {
 
 				for (JavaMethod method : currentClass.getListMethods()) {
 					// recuperer le nom de la methode
-					//sbCall.append(String.format("\t%s: \n", method.getmName()));
+					sbCall.append(String.format("\n\t%s: ", method.getmName()));
+					boolean found = false;
 
 					for (JavaMethodCall methodCall : method.getListMethodCalls()) {
 						// Verifier si la method est appele par une variable d'instance ou sinon c'est
@@ -125,10 +136,8 @@ public class JavaInterpreter {
 								.filter(m -> m.getaName().equals(methodCall.getObj()))
 								.findAny()
 								.orElseGet(() -> currentClass.getListAttributes().stream()
-										.filter(a -> {
-											System.out.printf("a.getaType() = %s \net methodCall.getOjet == %s%n", a.getaName(), methodCall.getObj());
-											return a.getaName().equals(methodCall.getObj());
-										})
+										.filter(a -> a.getaName().equals(methodCall.getObj())
+										)
 										.findAny()
 										.orElse(null));
 
@@ -151,8 +160,27 @@ public class JavaInterpreter {
 
 							String call = methodCall.getCall(pos);
 							if (call.contains("()")) {
-								sbCall.append(String.format("\t%s: \n", method.getmName()));
-								sbCall.append(String.format("\t\t%s.%s\n", otherClass.getcName(), call));
+								// si method static
+								if(attr == null) {
+									sbCall.append("\n\t\tappel " + GREEN_BOLD)
+											.append(otherClass.getcName()).append(".")
+											.append(WHITE_BOLD_BRIGHT).append(call)
+											.append(RESET);
+									sbCall.append(" | classe appartenance : " + GREEN_BOLD).append(otherClass.getcName()).append(RESET);
+									sbCall.append(" | accès : STATIC Method");
+								}
+								else {
+									sbCall.append("\n\t\tappel " + GREEN_BOLD)
+											.append(attr.getaName())
+											.append(".")
+											.append(WHITE_BOLD_BRIGHT)
+											.append(call)
+											.append(RESET);
+									sbCall.append(" | classe appartenance : " + GREEN_BOLD).append(otherClass.getcName()).append(RESET);
+									sbCall.append(" | accès : Variable Instance");
+								}
+
+								found = true;
 
 								int couplingSize = coupling.getOrDefault(otherClass.getcName(), 0);
 								coupling.put(otherClass.getcName(), couplingSize + 1);
@@ -175,40 +203,51 @@ public class JavaInterpreter {
 								}
 							}
 						}
+
+
+					}
+
+					if(!found){
+						sbCall.append("-");
 					}
 				}
 
 				// Coupling
 				if (!coupling.entrySet().isEmpty()) {
 					for (Entry<String, Integer> entry : coupling.entrySet()) {
-						sbCoupling.append(String.format("\t%s: %d\n", entry.getKey(), entry.getValue()));
+						sbCoupling.append("\t+ La classe ")
+								.append(YELLOW_BOLD_BRIGHT).append(currentClass.getcName()).append(RESET)
+								.append(" appelle ")
+								.append(GREEN_BOLD).append(entry.getValue()).append(" méthodes").append(RESET)
+								.append(" de la classe ")
+								.append(GREEN_BOLD).append(entry.getKey()).append(RESET).append("\n");
 					}
 				} else {
-					sbCall.append("\tPas de couplage entre classe\n");
-					sbCoupling.append("\tPas de reference direct.\n");
+					sbCoupling.append(RED + "\tPas de couplage entre classe\n").append(RESET);
+					sbCall.append(RED + "\n\tPas de reference direct.\n").append(RESET);
 				}
 			});
 		});
 
-		System.out.println("==========================================");
+		System.out.println(WHITE_BOLD + "==========================================");
 		System.out.println("=============== Modifiers ================");
-		System.out.println("==========================================");
+		System.out.println("==========================================" + RESET);
 		System.out.println(sbModifier);
-		System.out.println("==========================================");
+		System.out.println(WHITE_BOLD + "==========================================");
 		System.out.println("=============== Visibility ===============");
-		System.out.println("==========================================");
+		System.out.println("==========================================" + RESET);
 		System.out.println(sbVisibility);
-		System.out.println("==========================================");
+		System.out.println(WHITE_BOLD + "==========================================");
 		System.out.println("=============== Class Schemes ============");
-		System.out.println("==========================================");
+		System.out.println("=========================================="+ RESET);
 		System.out.println(sbInheritance);
-		System.out.println("==========================================");
+		System.out.println(WHITE_BOLD + "==========================================");
 		System.out.println("=============== Coupling =================");
-		System.out.println("==========================================");
+		System.out.println("==========================================" + RESET);
 		System.out.println(sbCoupling);
-		System.out.println("==========================================");
+		System.out.println(WHITE_BOLD + "==========================================");
 		System.out.println("=============== Call Hierarchy ===========");
-		System.out.println("==========================================");
+		System.out.println("==========================================" + RESET);
 		System.out.println(sbCall);
 	}
 
@@ -226,27 +265,4 @@ public class JavaInterpreter {
 		}
 		return null;
 	}
-
-	public void debugTree() {
-		System.out.println("==========================================");
-		System.out.println("============== DEBUG =====================");
-		System.out.println("==========================================");
-		for (Object o : objectManager) {
-			JavaFile f = (JavaFile) o;
-			for (JavaClass c : f.getListClasses()) {
-				System.out.printf("CLASS: %s\n", c.getcName());
-				for (JavaAttribute a : c.getListAttributes()) {
-					System.out.printf("\tATTR: %s : %s\n", a.getaName(), a.getaType());
-				}
-
-				for (JavaMethod m : c.getListMethods()) {
-					System.out.printf("\tMETHOD: %s -> %s\n", m.getmName(), m.getmTypeReturn());
-					for (JavaMethodCall mc : m.getListMethodCalls()) {
-						System.out.printf("\t\tCALL: %s\n", mc.getRawCall());
-					}
-				}
-			}
-		}
-	}
-
 }

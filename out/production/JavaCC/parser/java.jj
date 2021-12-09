@@ -73,7 +73,7 @@ public class JavaParser
       try {
           this.objectManager = objectManager;
           InputStream stream = new FileInputStream(file);
-	      jj_input_stream = new JavaCharStream(stream, 1, 1); 
+	      jj_input_stream = new SimpleCharStream(stream, 1, 1); 
 	      token_source = new JavaParserTokenManager(jj_input_stream);
 	      ReInit(stream);
       }
@@ -168,7 +168,6 @@ public class JavaParser
 	
 			if(error == 0) {
 				JavaInterpreter interpreter = new JavaInterpreter(om);
-				interpreter.debugTree();
 				interpreter.showStatisticToConsole();
 			}
 	}

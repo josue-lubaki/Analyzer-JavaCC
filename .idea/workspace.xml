@@ -6,9 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="8d064a10-3072-4fae-ba5f-85a3dd5f907f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$JJCalls.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$JJCalls.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserTokenManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserTokenManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/java.jj" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/java.jj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Test/Adress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/Adress.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Test/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/JavaParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/JavaParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/java.jj" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/java.jj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +79,7 @@
       <option name="presentableId" value="Default" />
       <updated>1639064175225</updated>
       <workItem from="1639064176804" duration="327000" />
-      <workItem from="1639065255993" duration="16946000" />
+      <workItem from="1639065255993" duration="23348000" />
     </task>
     <servers />
   </component>
@@ -82,15 +87,6 @@
     <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/utility/JavaInterpreter.java</url>
-          <line>119</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="method" />
