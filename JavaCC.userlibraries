@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="invoice">
+    <archive path="E:/GitHub/Spring/invoice" />
+  </library>
+  <library name="invoise-web">
+    <archive path="E:/GitHub/Spring/invoise-web" />
+  </library>
+</eclipse-userlibraries>
+

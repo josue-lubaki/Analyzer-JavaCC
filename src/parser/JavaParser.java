@@ -15,7 +15,7 @@ public class JavaParser implements JavaParserConstants {
 
     /**
      * Constructor for JavaParser.
-     * @param fileName name of the file to parse
+     * @param file the file to parse
      */
    public JavaParser(File file, JavaObjetManager objectManager)
    {
@@ -58,7 +58,7 @@ public class JavaParser implements JavaParserConstants {
   // Main method for testing, here is a one-liner bash script that can be ran from
   // the command line:
   // for f in /some/directory/full/of/java/files/*.java; do java -cp . JavaParser $f; done
-  public static void main(String args[]) {
+  public static void main(String[] args) {
 
     if (args.length == 0) {
       System.out.println("Java Parser Version 1.7:  Reading from standard input...");
@@ -7327,12 +7327,12 @@ public class JavaParser implements JavaParserConstants {
   private int jj_gc = 0;
 
   /** Constructor with InputStream. */
-  public JavaParser(java.io.InputStream stream) {
+  public JavaParser(InputStream stream) {
      this(stream, null);
   }
   /** Constructor with InputStream and supplied encoding */
-  public JavaParser(java.io.InputStream stream, String encoding) {
-    try { jj_input_stream = new JavaCharStream(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
+  public JavaParser(InputStream stream, String encoding) {
+    try { jj_input_stream = new JavaCharStream(stream, encoding, 1, 1); } catch(UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source = new JavaParserTokenManager(jj_input_stream);
     token = new Token();
     jj_ntk = -1;
@@ -7342,12 +7342,12 @@ public class JavaParser implements JavaParserConstants {
   }
 
   /** Reinitialise. */
-  public void ReInit(java.io.InputStream stream) {
+  public void ReInit(InputStream stream) {
      ReInit(stream, null);
   }
   /** Reinitialise. */
-  public void ReInit(java.io.InputStream stream, String encoding) {
-    try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
+  public void ReInit(InputStream stream, String encoding) {
+    try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch(UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source.ReInit(jj_input_stream);
     token = new Token();
     jj_ntk = -1;
@@ -7357,7 +7357,7 @@ public class JavaParser implements JavaParserConstants {
   }
 
   /** Constructor. */
-  public JavaParser(java.io.Reader stream) {
+  public JavaParser(Reader stream) {
     jj_input_stream = new JavaCharStream(stream, 1, 1);
     token_source = new JavaParserTokenManager(jj_input_stream);
     token = new Token();
@@ -7368,7 +7368,7 @@ public class JavaParser implements JavaParserConstants {
   }
 
   /** Reinitialise. */
-  public void ReInit(java.io.Reader stream) {
+  public void ReInit(Reader stream) {
     jj_input_stream.ReInit(stream, 1, 1);
     token_source.ReInit(jj_input_stream);
     token = new Token();
@@ -7422,7 +7422,7 @@ public class JavaParser implements JavaParserConstants {
     throw generateParseException();
   }
 
-  static private final class LookaheadSuccess extends java.lang.Error { }
+  static private final class LookaheadSuccess extends Error { }
   final private LookaheadSuccess jj_ls = new LookaheadSuccess();
   private boolean jj_scan_token(int kind) {
     if (jj_scanpos == jj_lastpos) {
@@ -7472,7 +7472,7 @@ public class JavaParser implements JavaParserConstants {
       return (jj_ntk = jj_nt.kind);
   }
 
-  private java.util.List<int[]> jj_expentries = new java.util.ArrayList<int[]>();
+  private List<int[]> jj_expentries = new ArrayList<int[]>();
   private int[] jj_expentry;
   private int jj_kind = -1;
   private int[] jj_lasttokens = new int[100];
