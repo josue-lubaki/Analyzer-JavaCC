@@ -10,6 +10,7 @@ public class Adress {
 			this.rue = rue;
 			this.ville = ville;
 			this.zip = zip;
+			nbreAdress++;
 		}
 
 		public String getRue() {
@@ -34,6 +35,14 @@ public class Adress {
 
 		public void setZip(String zip) {
 			this.zip = zip;
+		}
+
+		public static int nbreAdress(){
+			return nbreAdress++;
+		}
+
+		public String myAdress(){
+			return String.format("%s %s %s", rue, ville, zip);
 		}
 		
 	}

@@ -74,7 +74,6 @@ public class JavaInterpreter {
 						nbrePrimitiveAttribute++;
 					else {
 						nbreReferenceAttribute++;
-
 						if (!listAssociations.contains(attr.getaType())
 								&& !currentClass.getcName().equalsIgnoreCase(attr.getaType())) {
 							listAssociations.add(attr.getaType());
@@ -86,11 +85,11 @@ public class JavaInterpreter {
 				double total = nbrePublicAttribute + nbrePrivateAttribute + nbreProtectedAttribute;
 				if (total > 0) {
 					sbModifier.append(
-							String.format("\tPublic: %.2f%s\n", ((double) nbrePublicAttribute / total * 100), "%"));
-					sbModifier.append(String.format("\tProtected: %.2f%s\n",
+							String.format("\tPourcentage des attributs publics: %.2f%s\n", ((double) nbrePublicAttribute / total * 100), "%"));
+					sbModifier.append(String.format("\tPourcentage des attributs Protected: %.2f%s\n",
 							((double) nbreProtectedAttribute / total * 100), "%"));
 					sbModifier.append(
-							String.format("\tPrivate: %.2f%s\n", ((double) nbrePrivateAttribute / total * 100), "%"));
+							String.format("\tPourcentage des attributs Private: %.2f%s\n", ((double) nbrePrivateAttribute / total * 100), "%"));
 
 					total = nbrePrimitiveAttribute + nbreReferenceAttribute;
 
@@ -100,7 +99,7 @@ public class JavaInterpreter {
 					sbVisibility.append(String.format("\t\tRéférence Type: %.2f%s\n",
 							((double) nbreReferenceAttribute / total * 100), "%"));
 
-					sbVisibility.append("\tvisibilité permanente : \n");
+					sbVisibility.append("\tclasse à visibilité permanente : \n");
 					for (JavaAttribute attr : currentClass.getListAttributes()) {
 						if (!listVisibility.contains(attr.getaType())
 								&& !currentClass.getcName().equalsIgnoreCase(attr.getaType())) {
@@ -109,22 +108,27 @@ public class JavaInterpreter {
 						}
 					}
 
-				} else
-					sbModifier.append("\tPas de Variables\n");
+				} else {
+					sbModifier.append("\tPas d'Attribut\n");
+					sbVisibility.append("\tPas de visibilité pour des Attributs\n");
+				}
 
 				for (JavaMethod method : currentClass.getListMethods()) {
 					// recuperer le nom de la methode
-					sbCall.append(String.format("\t%s: \n", method.getmName()));
+					//sbCall.append(String.format("\t%s: \n", method.getmName()));
 
 					for (JavaMethodCall methodCall : method.getListMethodCalls()) {
 						// Verifier si la method est appele par une variable d'instance ou sinon c'est
 						// une method statique de la classe
 						JavaAttribute attr = method.getListLocalVariables()
 								.stream()
-								.filter(m -> m.getaName().equalsIgnoreCase(methodCall.getObj()))
+								.filter(m -> m.getaName().equals(methodCall.getObj()))
 								.findAny()
 								.orElseGet(() -> currentClass.getListAttributes().stream()
-										.filter(a -> a.getaName().equalsIgnoreCase(methodCall.getObj()))
+										.filter(a -> {
+											System.out.printf("a.getaType() = %s \net methodCall.getOjet == %s%n", a.getaName(), methodCall.getObj());
+											return a.getaName().equals(methodCall.getObj());
+										})
 										.findAny()
 										.orElse(null));
 
@@ -147,6 +151,7 @@ public class JavaInterpreter {
 
 							String call = methodCall.getCall(pos);
 							if (call.contains("()")) {
+								sbCall.append(String.format("\t%s: \n", method.getmName()));
 								sbCall.append(String.format("\t\t%s.%s\n", otherClass.getcName(), call));
 
 								int couplingSize = coupling.getOrDefault(otherClass.getcName(), 0);
@@ -179,6 +184,7 @@ public class JavaInterpreter {
 						sbCoupling.append(String.format("\t%s: %d\n", entry.getKey(), entry.getValue()));
 					}
 				} else {
+					sbCall.append("\tPas de couplage entre classe\n");
 					sbCoupling.append("\tPas de reference direct.\n");
 				}
 			});

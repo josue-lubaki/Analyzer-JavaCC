@@ -46,8 +46,10 @@ public class User {
 	}	
 	
 	public int getNombreAdress() {
-		return Adress.nbreAdress;
+		return Adress.nbreAdress();
 	}
 	
-	
+	public String getMyAdress(){
+		return adress.myAdress();
+	}
 }
