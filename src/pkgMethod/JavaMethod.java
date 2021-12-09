@@ -11,7 +11,7 @@ import pkgMethodCall.JavaMethodCall;
 public class JavaMethod implements IAttribute, IMethodCall{
 	
 	private String mName;
-	private String mTypeReturn;
+	private String mTypeReturn = "void";
 	private int mScope;
 	private List<JavaAttribute> listLocalVariables;
 	private List<JavaAttribute> listParameters;
@@ -45,7 +45,8 @@ public class JavaMethod implements IAttribute, IMethodCall{
 	public JavaMethod(String mName, int mScope, String mTypeReturn) {
 		this.mName = mName;
 		this.mScope = mScope;
-		this.mTypeReturn = mTypeReturn;
+		if(mTypeReturn != null)
+			this.mTypeReturn = mTypeReturn;
 		this.listParameters = new ArrayList<>();
 		this.listLocalVariables = new ArrayList<>();
 		this.listMethodCalls = new ArrayList<>();

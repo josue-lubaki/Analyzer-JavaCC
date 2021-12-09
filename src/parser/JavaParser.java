@@ -9,6 +9,7 @@ import pkgInterface.*;
 import utility.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class JavaParser implements JavaParserConstants {
         private JavaObjetManager objectManager;
@@ -19,11 +20,10 @@ public class JavaParser implements JavaParserConstants {
      */
    public JavaParser(File file, JavaObjetManager objectManager)
    {
-      //this(System.in);
       try {
           this.objectManager = objectManager;
           InputStream stream = new FileInputStream(file);
-              jj_input_stream = new JavaCharStream(stream, 1, 1);
+              jj_input_stream = new SimpleCharStream(stream, 1, 1);
               token_source = new JavaParserTokenManager(jj_input_stream);
               ReInit(stream);
       }
@@ -31,13 +31,6 @@ public class JavaParser implements JavaParserConstants {
         e.printStackTrace();
       }
    }
-
-   /*JavaParser(JavaCharStream stream) {
-        jj_input_stream = stream;
-        token_source = new JavaParserTokenManager(jj_input_stream);
-        token = new Token();
-        jj_ntk = -1;
-   }*/
 
    public JavaObjetManager getObjectManager() {
                 return this.objectManager;
@@ -59,17 +52,29 @@ public class JavaParser implements JavaParserConstants {
   // the command line:
   // for f in /some/directory/full/of/java/files/*.java; do java -cp . JavaParser $f; done
   public static void main(String[] args) {
-
+    List<File> fileList;
     if (args.length == 0) {
-      System.out.println("Java Parser Version 1.7:  Reading from standard input...");
-      //parser = new JavaParser(System.in);
+        System.out.println("Veuillez entrer le path des fichiers \u00c3\u00a0 analyser");
+        String pathFile = new Scanner(System.in).nextLine();
+        File file = new File(pathFile);
+        fileList = bindingFile(file);
+        traitment(fileList, file);
     } else if (args.length == 1) {
-      File file = new File(args [0]);
-        List<File> fileList = new ArrayList<File>();
-      //System.out.println("Java Parser Version 1.7:  Reading from file " + args[0] + "...");
-      //try {
+        File file = new File(args [0]);
+        fileList = bindingFile(file);
+                traitment(fileList, file);
+    } else {
+      System.out.println("Entrer le path de votre fichier ou de votre dossier");
+    }
+  }
+
+
+  private static List<File> bindingFile(File file){
+        List<File> list = new ArrayList<File>();
+        System.out.println("Java Parser Version 1.7:  Reading from file " + file.getName() + "...");
+
         if(!file.exists()) {
-                System.out.println("The provided path does not exist.");
+                System.out.println("Aucune fichier trouv\u00c3\u00a9 dans le chemin fourni");
                 System.exit(1);
           }
 
@@ -77,61 +82,46 @@ public class JavaParser implements JavaParserConstants {
         if(!file.isFile()) {
                         List<File> javaFiles = JavaFileExplorer.getAllJavaFiles(file, 999);
                         if(javaFiles != null) {
-                                fileList.addAll(javaFiles);
+                                list.addAll(javaFiles);
+                                return list;
                         }
                         else {
-                                System.out.println("Error loading files from directory.");
+                                System.out.println("Erreur lors de l'ouverture des dossiers.");
                         System.exit(1);
                         }
         }
         else {
                         // when is a file
-                        fileList.add(file);
+                        list.add(file);
+                        return list;
         }
 
-                JavaObjetManager om = new JavaObjetManager();
-        JavaParser parser;
-        File f = null;
-        int error = 0;
-        for(File fs: fileList) {
-                        try {
-                                parser = new JavaParser(fs, om);
-                                parser.getObjectManager().push(new JavaFile(file));
-                                parser.CompilationUnit();
-                                System.out.println(String.format("%s: Success", fs.getName()));
-                        }
-                        catch(ParseException e) {
-                                error++;
-                                System.out.println(String.format("%s: Error: %s", fs.getName(), e.getMessage()));
-                        }
+        return null;
         }
 
-                if(error == 0) {
-                        JavaInterpreter interpreter = new JavaInterpreter(om);
-                        interpreter.debugTree();
-                        interpreter.showStatisticToConsole();
+        public static void traitment(List<File> fileList, File file){
+            JavaObjetManager om = new JavaObjetManager();
+                JavaParser parser;
+                int error = 0;
+                for(File fs: fileList) {
+                                try {
+                                        parser = new JavaParser(fs, om);
+                                        parser.getObjectManager().push(new JavaFile(file));
+                                        parser.CompilationUnit();
+                                        System.out.println(String.format("%s: execut\u00c3\u00a9 avec succ\u00c3\u00a8s", fs.getName()));
+                                }
+                                catch(ParseException e) {
+                                        error++;
+                                        System.out.println(String.format("%s: Erreur: %s", fs.getName(), e.getMessage()));
+                                }
                 }
 
-        //parser = new JavaParser(new java.io.FileInputStream(args[0]));
-      /*} catch (java.io.FileNotFoundException e) {
-        System.out.println("Java Parser Version 1.7:  File " + args[0] + " not found.");
-        return;
-      }*/
-    } else {
-      System.out.println("Java Parser Version 1.7:  Usage is one of:");
-      System.out.println("         java JavaParser < inputfile");
-      System.out.println("OR");
-      System.out.println("         java JavaParser inputfile");
-      return;
-    }
-    /*try {
-      parser.CompilationUnit();
-      System.out.println("Java Parser Version 1.7:  Java program parsed successfully.");
-    } catch (ParseException e) {
-      System.out.println(e.getMessage());
-      System.out.println("Java Parser Version 1.7:  Encountered errors during parse.");
-    }*/
-  }
+                        if(error == 0) {
+                                JavaInterpreter interpreter = new JavaInterpreter(om);
+                                interpreter.debugTree();
+                                interpreter.showStatisticToConsole();
+                        }
+        }
 
 /*****************************************
  * THE JAVA LANGUAGE GRAMMAR STARTS HERE *
@@ -4461,6 +4451,46 @@ public class JavaParser implements JavaParserConstants {
     finally { jj_save(54, xla); }
   }
 
+  private boolean jj_3R_320() {
+    if (jj_scan_token(CATCH)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_48()) {
+    jj_scanpos = xsp;
+    if (jj_3R_327()) return true;
+    }
+    if (jj_scan_token(RPAREN)) return true;
+    if (jj_3R_100()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_174() {
+    if (jj_scan_token(EXTENDS)) return true;
+    if (jj_3R_82()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_304()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_170() {
+    if (jj_scan_token(TRY)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_190()) jj_scanpos = xsp;
+    if (jj_3R_100()) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_320()) { jj_scanpos = xsp; break; }
+    }
+    xsp = jj_scanpos;
+    if (jj_3R_321()) jj_scanpos = xsp;
+    return false;
+  }
+
   private boolean jj_3_17() {
     if (jj_scan_token(DOT)) return true;
     if (jj_scan_token(IDENTIFIER)) return true;
@@ -7240,49 +7270,9 @@ public class JavaParser implements JavaParserConstants {
     return false;
   }
 
-  private boolean jj_3R_320() {
-    if (jj_scan_token(CATCH)) return true;
-    if (jj_scan_token(LPAREN)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_48()) {
-    jj_scanpos = xsp;
-    if (jj_3R_327()) return true;
-    }
-    if (jj_scan_token(RPAREN)) return true;
-    if (jj_3R_100()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_174() {
-    if (jj_scan_token(EXTENDS)) return true;
-    if (jj_3R_82()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_304()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  private boolean jj_3R_170() {
-    if (jj_scan_token(TRY)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_190()) jj_scanpos = xsp;
-    if (jj_3R_100()) return true;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_320()) { jj_scanpos = xsp; break; }
-    }
-    xsp = jj_scanpos;
-    if (jj_3R_321()) jj_scanpos = xsp;
-    return false;
-  }
-
   /** Generated Token Manager. */
   public JavaParserTokenManager token_source;
-  JavaCharStream jj_input_stream;
+  SimpleCharStream jj_input_stream;
   /** Current token. */
   public Token token;
   /** Next token. */
@@ -7327,12 +7317,12 @@ public class JavaParser implements JavaParserConstants {
   private int jj_gc = 0;
 
   /** Constructor with InputStream. */
-  public JavaParser(InputStream stream) {
+  public JavaParser(java.io.InputStream stream) {
      this(stream, null);
   }
   /** Constructor with InputStream and supplied encoding */
-  public JavaParser(InputStream stream, String encoding) {
-    try { jj_input_stream = new JavaCharStream(stream, encoding, 1, 1); } catch(UnsupportedEncodingException e) { throw new RuntimeException(e); }
+  public JavaParser(java.io.InputStream stream, String encoding) {
+    try { jj_input_stream = new SimpleCharStream(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source = new JavaParserTokenManager(jj_input_stream);
     token = new Token();
     jj_ntk = -1;
@@ -7342,12 +7332,12 @@ public class JavaParser implements JavaParserConstants {
   }
 
   /** Reinitialise. */
-  public void ReInit(InputStream stream) {
+  public void ReInit(java.io.InputStream stream) {
      ReInit(stream, null);
   }
   /** Reinitialise. */
-  public void ReInit(InputStream stream, String encoding) {
-    try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch(UnsupportedEncodingException e) { throw new RuntimeException(e); }
+  public void ReInit(java.io.InputStream stream, String encoding) {
+    try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source.ReInit(jj_input_stream);
     token = new Token();
     jj_ntk = -1;
@@ -7357,8 +7347,8 @@ public class JavaParser implements JavaParserConstants {
   }
 
   /** Constructor. */
-  public JavaParser(Reader stream) {
-    jj_input_stream = new JavaCharStream(stream, 1, 1);
+  public JavaParser(java.io.Reader stream) {
+    jj_input_stream = new SimpleCharStream(stream, 1, 1);
     token_source = new JavaParserTokenManager(jj_input_stream);
     token = new Token();
     jj_ntk = -1;
@@ -7368,7 +7358,7 @@ public class JavaParser implements JavaParserConstants {
   }
 
   /** Reinitialise. */
-  public void ReInit(Reader stream) {
+  public void ReInit(java.io.Reader stream) {
     jj_input_stream.ReInit(stream, 1, 1);
     token_source.ReInit(jj_input_stream);
     token = new Token();
@@ -7422,7 +7412,7 @@ public class JavaParser implements JavaParserConstants {
     throw generateParseException();
   }
 
-  static private final class LookaheadSuccess extends Error { }
+  static private final class LookaheadSuccess extends java.lang.Error { }
   final private LookaheadSuccess jj_ls = new LookaheadSuccess();
   private boolean jj_scan_token(int kind) {
     if (jj_scanpos == jj_lastpos) {
@@ -7472,7 +7462,7 @@ public class JavaParser implements JavaParserConstants {
       return (jj_ntk = jj_nt.kind);
   }
 
-  private List<int[]> jj_expentries = new ArrayList<int[]>();
+  private java.util.List<int[]> jj_expentries = new java.util.ArrayList<int[]>();
   private int[] jj_expentry;
   private int jj_kind = -1;
   private int[] jj_lasttokens = new int[100];

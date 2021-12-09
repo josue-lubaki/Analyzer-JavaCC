@@ -40,10 +40,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 options {
-  JAVA_UNICODE_ESCAPE = true;
+  JAVA_UNICODE_ESCAPE = false;
   //ERROR_REPORTING = true;
   STATIC = false;
-  //DEBUG_PARSER = true;
+  DEBUG_PARSER = false;
   JDK_VERSION = "15";
 }
 
@@ -58,6 +58,7 @@ import pkgInterface.*;
 import utility.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class JavaParser
 {
@@ -65,11 +66,10 @@ public class JavaParser
 
     /**
      * Constructor for JavaParser.
-     * @param fileName name of the file to parse
+     * @param file the file to parse
      */
    public JavaParser(File file, JavaObjetManager objectManager)
    {
-      //this(System.in);
       try {
           this.objectManager = objectManager;
           InputStream stream = new FileInputStream(file);
@@ -81,13 +81,6 @@ public class JavaParser
         e.printStackTrace();
       }
    }
-
-   /*JavaParser(JavaCharStream stream) {
-        jj_input_stream = stream;
-        token_source = new JavaParserTokenManager(jj_input_stream);
-        token = new Token();
-        jj_ntk = -1;
-   }*/
 
    public JavaObjetManager getObjectManager() {
 		return this.objectManager;
@@ -108,18 +101,30 @@ public class JavaParser
   // Main method for testing, here is a one-liner bash script that can be ran from
   // the command line:
   // for f in /some/directory/full/of/java/files/*.java; do java -cp . JavaParser $f; done
-  public static void main(String args[]) {
-    
+  public static void main(String[] args) {
+    List<File> fileList;
     if (args.length == 0) {
-      System.out.println("Java Parser Version 1.7:  Reading from standard input...");
-      //parser = new JavaParser(System.in);
+        System.out.println("Veuillez entrer le path des fichiers à analyser");
+        String pathFile = new Scanner(System.in).nextLine();
+        File file = new File(pathFile);
+        fileList = bindingFile(file);
+        traitment(fileList, file);
     } else if (args.length == 1) {
-      File file = new File(args [0]);
-    	List<File> fileList = new ArrayList<File>();
-      //System.out.println("Java Parser Version 1.7:  Reading from file " + args[0] + "...");
-      //try {
+        File file = new File(args [0]);
+        fileList = bindingFile(file);
+		traitment(fileList, file);
+    } else {
+      System.out.println("Entrer le path de votre fichier ou de votre dossier");
+    }
+  }
+
+  
+  private static List<File> bindingFile(File file){
+	List<File> list = new ArrayList<File>();
+	System.out.println("Java Parser Version 1.7:  Reading from file " + file.getName() + "...");
+
         if(!file.exists()) {
-          	System.out.println("The provided path does not exist.");
+          	System.out.println("Aucune fichier trouvé dans le chemin fourni");
       		System.exit(1);
           }
 
@@ -127,64 +132,49 @@ public class JavaParser
       	if(!file.isFile()) {
 			List<File> javaFiles = JavaFileExplorer.getAllJavaFiles(file, 999);
 			if(javaFiles != null) {
-				fileList.addAll(javaFiles);
+				list.addAll(javaFiles);
+				return list;
 			}
 			else {
-				System.out.println("Error loading files from directory.");
+				System.out.println("Erreur lors de l'ouverture des dossiers.");
       	  		System.exit(1);
 			}
         }
         else {
 			// when is a file
-			fileList.add(file);
+			list.add(file);
+			return list;
         }
 
-		JavaObjetManager om = new JavaObjetManager();
-        JavaParser parser;
-        File f = null;
-        int error = 0;
-        for(File fs: fileList) {
-			try {
-				parser = new JavaParser(fs, om);
-				parser.getObjectManager().push(new JavaFile(file));
-				parser.CompilationUnit();
-				System.out.println(String.format("%s: Success", fs.getName()));
-			}
-			catch(ParseException e) {
-				error++;
-				System.out.println(String.format("%s: Error: %s", fs.getName(), e.getMessage()));
-			}
-        }
+        return null;
+	}
 
-		if(error == 0) {
-			JavaInterpreter interpreter = new JavaInterpreter(om);
-			interpreter.debugTree();
-			interpreter.showStatisticToConsole();
-		}
-        
-        //parser = new JavaParser(new java.io.FileInputStream(args[0]));
-      /*} catch (java.io.FileNotFoundException e) {
-        System.out.println("Java Parser Version 1.7:  File " + args[0] + " not found.");
-        return;
-      }*/
-    } else {
-      System.out.println("Java Parser Version 1.7:  Usage is one of:");
-      System.out.println("         java JavaParser < inputfile");
-      System.out.println("OR");
-      System.out.println("         java JavaParser inputfile");
-      return;
-    }
-    /*try {
-      parser.CompilationUnit();
-      System.out.println("Java Parser Version 1.7:  Java program parsed successfully.");
-    } catch (ParseException e) {
-      System.out.println(e.getMessage());
-      System.out.println("Java Parser Version 1.7:  Encountered errors during parse.");
-    }*/
-  }
-  
-  
+	public static void traitment(List<File> fileList, File file){
+	    JavaObjetManager om = new JavaObjetManager();
+	        JavaParser parser;
+	        int error = 0;
+	        for(File fs: fileList) {
+				try {
+					parser = new JavaParser(fs, om);
+					parser.getObjectManager().push(new JavaFile(file));
+					parser.CompilationUnit();
+					System.out.println(String.format("%s: executé avec succès", fs.getName()));
+				}
+				catch(ParseException e) {
+					error++;
+					System.out.println(String.format("%s: Erreur: %s", fs.getName(), e.getMessage()));
+				}
+	        }
+	
+			if(error == 0) {
+				JavaInterpreter interpreter = new JavaInterpreter(om);
+				interpreter.debugTree();
+				interpreter.showStatisticToConsole();
+			}
+	}
 }
+
+
 
 PARSER_END(JavaParser)
 

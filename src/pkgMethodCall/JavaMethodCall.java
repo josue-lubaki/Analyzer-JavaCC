@@ -2,8 +2,8 @@ package pkgMethodCall;
 
 public class JavaMethodCall {
 
-	private String rawCall;
-	private String[] splittedCall;
+	private final String rawCall;
+	private final String[] splittedCall;
 
 	public JavaMethodCall(String rawCall) {
 		this.rawCall = rawCall;

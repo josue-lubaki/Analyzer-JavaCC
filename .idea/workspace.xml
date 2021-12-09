@@ -1,11 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d064a10-3072-4fae-ba5f-85a3dd5f907f" name="Changes" comment="" />
+    <list default="true" id="8d064a10-3072-4fae-ba5f-85a3dd5f907f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$JJCalls.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$JJCalls.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserTokenManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserTokenManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/ParseException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/ParseException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/Token$GTToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/Token$GTToken.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/Token.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/Token.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/java.jj" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/java.jj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/pkgAttribute/JavaAttribute.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/pkgAttribute/JavaAttribute.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/pkgClass/JavaClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/pkgClass/JavaClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/pkgInterface/JavaInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/pkgInterface/JavaInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/pkgMethod/JavaMethod.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/pkgMethod/JavaMethod.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/pkgMethodCall/IMethodCall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/pkgMethodCall/IMethodCall.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/pkgMethodCall/JavaMethodCall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/pkgMethodCall/JavaMethodCall.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaFile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaFileExplorer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaFileExplorer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaImport.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaImport.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaModifierSet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaModifierSet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaToken.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Test/Adress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/Adress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Test/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/JavaParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/JavaParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/JavaParserTokenManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/JavaParserTokenManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/ParseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/ParseException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/java.jj" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/java.jj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pkgMethod/JavaMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkgMethod/JavaMethod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pkgMethodCall/JavaMethodCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkgMethodCall/JavaMethodCall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utility/JavaObjetManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/JavaObjetManager.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -20,7 +58,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Test" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/JavaCC/inf1018-tp3-master" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -28,6 +70,26 @@
       <recent name="E:\SA_2021\Analyse des Programmes\JavaCC\Apprentissage\JavaCC\src" />
       <recent name="E:\SA_2021\Analyse des Programmes\JavaCC\Apprentissage\JavaCC\src\parser" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="JavaParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="parser.JavaParser" />
+      <module name="JavaCC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="parser.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.JavaParser" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -38,10 +100,22 @@
       <option name="presentableId" value="Default" />
       <updated>1639064175225</updated>
       <workItem from="1639064176804" duration="327000" />
+      <workItem from="1639065255993" duration="12319000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pkgMethodCall/JavaMethodCall.java</url>
+          <line>8</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -2,6 +2,7 @@
 /* JavaCCOptions:KEEP_LINE_COL=null */
 package parser;
 
+
 /**
  * This exception is thrown when parse errors are encountered.
  * You can explicitly create objects of this exception type by
