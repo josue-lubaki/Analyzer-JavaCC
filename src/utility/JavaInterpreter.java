@@ -295,7 +295,7 @@ public class JavaInterpreter {
 					long now = System.currentTimeMillis();
 					String path = "resultat" + File.separator + currentClass.getcName() + "-" + now + ".txt";
 
-					// créer dossier resulat
+					// créer dossier resultat
 					File dir = new File("resultat");
 					if (!dir.exists()) {
 						boolean f = dir.mkdir();

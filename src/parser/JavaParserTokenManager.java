@@ -10,6 +10,7 @@ import utility.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import static utility.JavaInterpreter.*;
 
 /** Token Manager. */
 public class JavaParserTokenManager implements JavaParserConstants
