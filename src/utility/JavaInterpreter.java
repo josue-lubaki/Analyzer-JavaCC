@@ -263,9 +263,10 @@ public class JavaInterpreter {
 					sbCall.get().append(RED + "\n\tPas de reference direct.\n").append(RESET);
 				}
 
-				System.out.println(RED + "=================================================");
-				System.out.println("=============== La Classe " + currentClass.getcName() + " ================");
-				System.out.println("================================================" + RESET);
+				System.out.println(GREEN_BOLD + "=================================================");
+				System.out.println(WHITE_BOLD_BRIGHT + "===============" + YELLOW_BOLD_BRIGHT + " La Classe " + currentClass.getcName()
+						+ WHITE_BOLD_BRIGHT + " ================");
+				System.out.println(GREEN_BOLD + "================================================" + RESET);
 				System.out.println(WHITE_BOLD + "==========================================");
 				System.out.println("=============== Modifiers ================");
 				System.out.println("==========================================" + RESET);

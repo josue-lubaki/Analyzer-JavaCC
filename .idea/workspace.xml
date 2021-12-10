@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8d064a10-3072-4fae-ba5f-85a3dd5f907f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserTokenManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserTokenManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" afterDir="false" />
     </list>
@@ -74,7 +73,8 @@
       <updated>1639064175225</updated>
       <workItem from="1639064176804" duration="327000" />
       <workItem from="1639065255993" duration="23348000" />
-      <workItem from="1639109640193" duration="10073000" />
+      <workItem from="1639109640193" duration="10231000" />
+      <workItem from="1639152017729" duration="648000" />
     </task>
     <servers />
   </component>
