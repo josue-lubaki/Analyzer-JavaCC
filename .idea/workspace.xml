@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="JavaCC:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d064a10-3072-4fae-ba5f-85a3dd5f907f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/JavaCC_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$JJCalls.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$JJCalls.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserConstants.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserTokenManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserTokenManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/TokenMgrError.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/TokenMgrError.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaFileExplorer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaFileExplorer.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +34,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/JavaCC/inf1018-tp3-master" />
@@ -41,6 +42,9 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.27787307" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -49,7 +53,7 @@
       <recent name="E:\SA_2021\Analyse des Programmes\JavaCC\Apprentissage\JavaCC\src\parser" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.JavaParser">
     <configuration name="JavaParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="parser.JavaParser" />
       <module name="JavaCC" />
@@ -63,8 +67,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="JavaCC.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/JavaCC_jar/JavaCC.jar" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JAR Application.JavaCC.jar" />
         <item itemvalue="Application.JavaParser" />
       </list>
     </recent_temporary>
@@ -82,7 +91,7 @@
       <workItem from="1639109640193" duration="10231000" />
       <workItem from="1639152017729" duration="3307000" />
       <workItem from="1639156788233" duration="2135000" />
-      <workItem from="1639170006467" duration="16715000" />
+      <workItem from="1639170006467" duration="17457000" />
     </task>
     <servers />
   </component>
