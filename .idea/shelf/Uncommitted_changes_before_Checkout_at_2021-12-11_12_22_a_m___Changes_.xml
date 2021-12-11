@@ -1,0 +1,19 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_2021-12-11_12_22_a_m__[Changes]" date="1639200188801" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-12-11_12_22_a_m__[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 2021-12-11 12:22 a.m. [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/JavaCC/parser/JavaParser.class" />
+    <option name="AFTER_PATH" value="out/production/JavaCC/parser/JavaParser.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-12-11_12_22_a_m__[Changes]/JavaParser.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/JavaCC/parser/JavaParser$JJCalls.class" />
+    <option name="AFTER_PATH" value="out/production/JavaCC/parser/JavaParser$JJCalls.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-12-11_12_22_a_m__[Changes]/JavaParser$JJCalls.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" />
+    <option name="AFTER_PATH" value="out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-12-11_12_22_a_m__[Changes]/JavaParser$LookaheadSuccess.class" />
+  </binary>
+</changelist>

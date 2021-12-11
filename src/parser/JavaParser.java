@@ -144,7 +144,7 @@ public class JavaParser implements JavaParserConstants {
                  else if(indice == 4 && resultDisponible) {
                                 lancerAnalyse(pathFile, true);
                    }
-            else if(indice == 4 && !resultDisponible) {
+            else if(indice == 4) {
                                 System.out.println("COMPUTER : Sorry, Les resultats ne sont pas encore pret");
                         System.out.println("COMPUTER : Veuillez commencer par lancer l'analyser de l'option 2 ");
                 }
