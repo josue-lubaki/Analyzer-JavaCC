@@ -63,27 +63,27 @@ public class JavaParser implements JavaParserConstants {
     if (args.length == 0) {
       while(!exit) {
         do {
-                System.out.println(YELLOW_BOLD_BRIGHT + "\u005cn\u005cn\u005ct\u005ct\u005ct\u005ct\u005ct==================================");
-                System.out.println(YELLOW_BOLD_BRIGHT + "\u005ct\u005ct\u005ct\u005ct\u005ct========  MENU PRINCIPAL  ========");
-                System.out.println(YELLOW_BOLD_BRIGHT + "\u005ct\u005ct\u005ct\u005ct\u005ct==================================" + RESET);
-                System.out.println(WHITE_BOLD_BRIGHT + "\u005ct 1. " + RESET + "Entrer le path du fichier \u00c3\u00a0 analyser");
-                System.out.println(WHITE_BOLD + "\u005ct\u005ct Note: Vous pouvez entrer le path d'un fichier ou le path d'un dossier contenant les fichiers .java" + RESET);
-                System.out.print(WHITE_BOLD_BRIGHT + "\u005ct 2. " + RESET + "Lancer l'analyse ");
+                System.out.println("\u005cn\u005cn\u005ct\u005ct\u005ct\u005ct\u005ct==================================");
+                System.out.println("\u005ct\u005ct\u005ct\u005ct\u005ct========  MENU PRINCIPAL  ========");
+                System.out.println("\u005ct\u005ct\u005ct\u005ct\u005ct==================================");
+                System.out.println("\u005ct 1. Entrer le path du fichier \u00c3\u00a0 analyser");
+                System.out.println("\u005ct\u005ct Note: Vous pouvez entrer le path d'un fichier ou le path d'un dossier contenant les fichiers .java");
+                System.out.print("\u005ct 2. Lancer l'analyse ");
                 if(!pathNull)
-                        System.out.println(GREEN_BOLD + "(ALLOWED)" + RESET);
+                        System.out.println("(ALLOWED)");
                 else
-                        System.out.println(RED + "(NOT ALLOWED)" + RESET);
-                System.out.print(WHITE_BOLD_BRIGHT + "\u005ct 3. " + RESET + "Ouvrir le fichier de resultat saved du dossier \u005c"" + directoryResultat + "\u005c"");
+                        System.out.println("(NOT ALLOWED)");
+                System.out.print("\u005ct 3. Ouvrir le fichier de resultat saved du dossier \u005c"" + directoryResultat + "\u005c"");
                 if(resultDisponible)
-                        System.out.println(GREEN_BOLD + " (ALLOWED)" + RESET);
+                        System.out.println(" (ALLOWED)");
                 else
-                        System.out.println(RED + " (NOT ALLOWED)" + RESET);
-                System.out.print(WHITE_BOLD_BRIGHT + "\u005ct 4. " + RESET + "Voir tous les resultats sur la console ");
+                        System.out.println(" (NOT ALLOWED)");
+                System.out.print("\u005ct 4. Voir tous les resultats sur la console ");
                 if(resultDisponible)
-                        System.out.println(GREEN_BOLD + " (ALLOWED)" + RESET);
+                        System.out.println(" (ALLOWED)");
                 else
-                        System.out.println(RED + " (NOT ALLOWED)" + RESET);
-                System.out.println(WHITE_BOLD_BRIGHT + "\u005ct 0. " + RESET + "Quitter");
+                        System.out.println(" (NOT ALLOWED)");
+                System.out.println("\u005ct 0. Quitter");
                 System.out.print("Clavier |> ");
                 indiceString = new Scanner(System.in).nextLine();
               } while(!indiceString.matches("[0-9]"));
@@ -95,7 +95,7 @@ public class JavaParser implements JavaParserConstants {
                         exit = true;
               }
               else if(indice == 1) {
-                                System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez entrer le path des fichiers \u00c3\u00a0 analyser (exemple : " + GREEN_BOLD + "src/Test" + RESET + ")");
+                                System.out.println("COMPUTER : Veuillez entrer le path des fichiers \u00c3\u00a0 analyser (exemple : src/Test)");
                                 System.out.print("Clavier |> ");
                         pathFile = new Scanner(System.in).nextLine();
                         if(pathFile != null)
@@ -109,25 +109,25 @@ public class JavaParser implements JavaParserConstants {
                   resultDisponible = true;
                 }
                 else if(indice == 2) {
-                        System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Sorry, le parser n'a aucun fichier \u00c3\u00a0 analyser...");
-                        System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez commencer par entrer le path d'un fichier ou dossier !");
+                        System.out.println("COMPUTER : Sorry, le parser n'a aucun fichier \u00c3\u00a0 analyser...");
+                        System.out.println("COMPUTER : Veuillez commencer par entrer le path d'un fichier ou dossier !");
                }
                else if(indice == 3 && !resultDisponible) {
-                        System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Sorry, Les resultats ne sont pas encore pret");
-                        System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez commencer par lancer l'analyser de l'option 2 ");
+                        System.out.println("COMPUTER : Sorry, Les resultats ne sont pas encore pret");
+                        System.out.println("COMPUTER : Veuillez commencer par lancer l'analyser de l'option 2 ");
                }
                else if(indice == 3 & resultDisponible) {
                         int fChoice = -1;
                         String fChoiceString = "";
         System.out.println("\u005ct\u005ctVoici la liste des fichiers contanent le resultat d'analyse");
-                        System.out.println(WHITE_BOLD + "\u005ct\u005ctNote : le format est \u005c"NomClasse-Annee-Mois-Jour_Heure-Minutes-secondes.txt\u005c"" + RESET);
+                        System.out.println("\u005ct\u005ctNote : le format est \u005c"NomClasse-Annee-Mois-Jour_Heure-Minutes-secondes.txt\u005c"");
                         List<File> fileListResultat = JavaFileExplorer.getAllJavaFiles(new File(directoryResultat), 0, ".txt");
                       assert fileListResultat != null;
                       for(int i = 0 ; i < fileListResultat.size(); i++) {
-                        System.out.println(WHITE_BOLD_BRIGHT + "\u005ct\u005ct\u005ct" + (i+1) + ". " + RESET + fileListResultat.get(i).getName());
+                        System.out.println("\u005ct\u005ct\u005ct" + (i+1) + ". " + fileListResultat.get(i).getName());
                       }
                                 do {
-                                        System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez entrer l'indice du fichier");
+                                        System.out.println("COMPUTER : Veuillez entrer l'indice du fichier");
                         System.out.print("Clavier |> ");
                         fChoiceString = new Scanner(System.in).nextLine();
                       } while(!fChoiceString.matches("[0-9]") || Integer.parseInt(fChoiceString) > fileListResultat.size() || Integer.parseInt(fChoiceString) == 0);
@@ -135,24 +135,24 @@ public class JavaParser implements JavaParserConstants {
                                 String nameFile = fileListResultat.get(fChoice).getName();
                                 List<String> output =  readFile(nameFile);
                                 System.out.println();
-                                System.out.println(BLACK_BACKGROUND + "=========================================================== FILE " + nameFile + " =========================================================" +  WHITE_BOLD);
+                                System.out.println("=========================================================== FILE " + nameFile + " =========================================================");
                 for(String line : output) {
                         System.out.println(line);
                    }
-                System.out.print(BLACK_BACKGROUND + "========================================================================================================================================================================" + RESET);
+                System.out.print("========================================================================================================================================================================");
                  }
                  else if(indice == 4 && resultDisponible) {
                                 lancerAnalyse(pathFile, true);
                    }
             else if(indice == 4 && !resultDisponible) {
-                                System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Sorry, Les resultats ne sont pas encore pret");
-                        System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez commencer par lancer l'analyser de l'option 2 ");
+                                System.out.println("COMPUTER : Sorry, Les resultats ne sont pas encore pret");
+                        System.out.println("COMPUTER : Veuillez commencer par lancer l'analyser de l'option 2 ");
                 }
         }
     } else if (args.length == 1) {
        lancerAnalyse(args[0], true);
     } else {
-      System.out.println(RED + "Sorry, nous ne prenons pas en charge ce nombre d'entree !" + RESET);
+      System.out.println("Sorry, nous ne prenons pas en charge ce nombre d'entree !");
     }
   }
 
@@ -173,8 +173,8 @@ public class JavaParser implements JavaParserConstants {
                            }
                         br.close();
                   }catch (FileNotFoundException e) {
-            System.out.println(WHITE_BOLD_BRIGHT  + "COMPUTER : " + RESET + "Le fichier \u005c""
-                    + GREEN_BOLD + fileName + RESET + "\u005c" est introuvable");
+            System.out.println("COMPUTER : Le fichier \u005c""
+                    + fileName + "\u005c" est introuvable");
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();

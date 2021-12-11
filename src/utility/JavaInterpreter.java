@@ -19,14 +19,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * 
  */
 public class JavaInterpreter {
-	public static final String RESET = "\033[0m"; // Text Reset
-	public static final String GREEN_BOLD = "\033[1;32m"; // GREEN
-	public static final String YELLOW_BOLD = "\033[1;33m"; // YELLOW
-	public static final String YELLOW_BOLD_BRIGHT = "\033[1;93m";// YELLOW
-	public static final String RED = "\033[0;31m"; // RED
-	public static final String WHITE_BOLD = "\033[1;37m"; // WHITE
-	public static final String WHITE_BOLD_BRIGHT = "\033[1;97m"; // WHITE
-	public static final String BLACK_BACKGROUND = "\033[40m";  // BLACK
 	private final JavaObjetManager objectManager;
 	private StringBuilder outResultat = new StringBuilder();
 	public static final String directoryResultat = "Output";
@@ -61,37 +53,27 @@ public class JavaInterpreter {
 				// Affichage des Titres
 				Map<String, Integer> coupling = new HashMap<>();
 				sbModifier.get()
-						.append(YELLOW_BOLD
-								+ "Q1 |> Voici les statistiques de l'Analyse de la portee des attributs pour la classe "
-								+ YELLOW_BOLD_BRIGHT)
-						.append(currentClass.getcName())
-						.append(RESET).append("\n");
+						.append("Q1 |> Voici les statistiques de l'Analyse de la portee des attributs pour la classe ")
+						.append(currentClass.getcName()).append("\n");
 
 				sbVisibility.get()
-						.append(YELLOW_BOLD + "Q2 |> Voici les statistiques de l'Analyse de la visibilite de la classe "
-								+ YELLOW_BOLD_BRIGHT)
+						.append("Q2 |> Voici les statistiques de l'Analyse de la visibilite de la classe ")
 						.append(currentClass.getcName())
-						.append(RESET).append("\n");
+						.append("\n");
 
 				sbInheritance.get()
-						.append(YELLOW_BOLD
-								+ "Q3 |> Voici les statistiques de l'analyse portant sur l'heritage de la classe "
-								+ YELLOW_BOLD_BRIGHT)
+						.append("Q3 |> Voici les statistiques de l'analyse portant sur l'heritage de la classe ")
 						.append(currentClass.getcName())
-						.append(RESET).append("\n");
+						.append("\n");
 
 				sbCoupling.get()
-						.append(YELLOW_BOLD
-								+ "Q4 |> Voici les statistiques de l'Analyse sur le couplage pour la classe "
-								+ YELLOW_BOLD_BRIGHT)
+						.append("Q4 |> Voici les statistiques de l'Analyse sur le couplage pour la classe ")
 						.append(currentClass.getcName())
-						.append(RESET).append("\n");
+						.append("\n");
 
-				sbCall.get().append(YELLOW_BOLD
-						+ "Q5/ Voici les statistiques de l'analyse de graphe d'appel direct entre methodes pour la classe "
-						+ YELLOW_BOLD_BRIGHT)
-						.append(currentClass.getcName())
-						.append(RESET);
+				sbCall.get().append(
+						"Q5/ Voici les statistiques de l'analyse de graphe d'appel direct entre methodes pour la classe ")
+						.append(currentClass.getcName());
 
 				// Vérifier si la classe courant a un super Parent
 				if (!currentClass.hasSuperClass()) {
@@ -135,14 +117,17 @@ public class JavaInterpreter {
 					double pProtected = (nbreProtectedAttribute / total) * 100;
 					double pPrivate = (nbrePrivateAttribute / total) * 100;
 
-					sbModifier.get().append("\tPourcentage des attributs Private: " + GREEN_BOLD).append(f.format(pPrivate))
+					sbModifier.get().append("\tPourcentage des attributs Private: ")
+							.append(f.format(pPrivate))
 							.append("%")
-							.append(RESET).append("\n");
-					sbModifier.get().append("\tPourcentage des attributs publics: " + GREEN_BOLD).append(f.format(pPublic))
+							.append("\n");
+					sbModifier.get().append("\tPourcentage des attributs publics: ")
+							.append(f.format(pPublic))
 							.append("%")
-							.append(RESET).append("\n");
-					sbModifier.get().append("\tPourcentage des attributs Protected: " + GREEN_BOLD).append(f.format(pProtected))
-							.append("%").append(RESET).append("\n");
+							.append("\n");
+					sbModifier.get().append("\tPourcentage des attributs Protected: ")
+							.append(f.format(pProtected))
+							.append("%").append("\n");
 
 					total = nbrePrimitiveAttribute + nbreReferenceAttribute;
 					double pSimple = (nbrePrimitiveAttribute / total) * 100;
@@ -150,11 +135,12 @@ public class JavaInterpreter {
 
 					sbVisibility.get()
 							.append("\t% des attributs de type simple et % des attributs de référence (objet) :\n");
-					sbVisibility.get().append("\t\tSimple Type: " + GREEN_BOLD).append(f.format(pSimple)).append("%")
-							.append(RESET)
+					sbVisibility.get().append("\t\tSimple Type: ").append(f.format(pSimple)).append("%")
+
 							.append("\n");
-					sbVisibility.get().append("\t\tRéférence Type: " + GREEN_BOLD).append(f.format(pReference)).append("%")
-							.append(RESET).append("\n");
+					sbVisibility.get().append("\t\tRéférence Type: ").append(f.format(pReference))
+							.append("%")
+							.append("\n");
 
 					sbVisibility.get().append("\tclasse à visibilité permanente : \n");
 
@@ -208,23 +194,19 @@ public class JavaInterpreter {
 							if (call.contains("()")) {
 								// si method static
 								if (attr == null) {
-									sbCall.get().append("\n\t\tappel " + GREEN_BOLD)
-											.append(otherClass.getcName()).append(".")
-											.append(WHITE_BOLD_BRIGHT).append(call)
-											.append(RESET);
-									sbCall.get().append(" | classe appartenance : " + GREEN_BOLD)
-											.append(otherClass.getcName()).append(RESET);
+									sbCall.get().append("\n\t\tappel ")
+											.append(otherClass.getcName()).append(".").append(call);
+									sbCall.get().append(" | classe appartenance : ")
+											.append(otherClass.getcName());
 									sbCall.get().append(" | accès : STATIC Method").append("\n");
 
 								} else { // via variable instance
-									sbCall.get().append("\n\t\tappel " + GREEN_BOLD)
+									sbCall.get().append("\n\t\tappel ")
 											.append(attr.getaName())
 											.append(".")
-											.append(WHITE_BOLD_BRIGHT)
-											.append(call)
-											.append(RESET);
-									sbCall.get().append(" | classe d'appartenance : " + GREEN_BOLD)
-											.append(otherClass.getcName()).append(RESET);
+											.append(call);
+									sbCall.get().append(" | classe d'appartenance : ")
+											.append(otherClass.getcName());
 									sbCall.get().append(" | accès : Variable Instance").append("\n");
 								}
 
@@ -262,56 +244,56 @@ public class JavaInterpreter {
 				if (!coupling.entrySet().isEmpty()) {
 					for (Entry<String, Integer> entry : coupling.entrySet()) {
 						sbCoupling.get().append("\t+ La classe ")
-								.append(YELLOW_BOLD_BRIGHT).append(currentClass.getcName()).append(RESET)
+								.append(currentClass.getcName())
 								.append(" appelle ")
-								.append(GREEN_BOLD).append(entry.getValue()).append(" méthodes").append(RESET)
+								.append(entry.getValue()).append(" méthodes")
 								.append(" de la classe ")
-								.append(GREEN_BOLD).append(entry.getKey()).append(RESET).append("\n");
+								.append(entry.getKey()).append("\n");
 					}
 				} else {
-					sbCoupling.get().append(RED + "\tPas de couplage entre classe\n").append(RESET);
-					sbCall.get().append(RED + "\n\tPas de reference direct.\n").append(RESET);
+					sbCoupling.get().append("\tPas de couplage entre classe\n");
+					sbCall.get().append("\n\tPas de reference direct.\n");
 				}
 
 				// Si l'affiche à la console est demandée
-				if(allowShowConsole){
-					System.out.println(GREEN_BOLD + "=================================================");
-					System.out.println(WHITE_BOLD_BRIGHT + "===============" + YELLOW_BOLD_BRIGHT + " La Classe "
+				if (allowShowConsole) {
+					System.out.println("=================================================");
+					System.out.println("=============== La Classe "
 							+ currentClass.getcName()
-							+ WHITE_BOLD_BRIGHT + " ================");
-					System.out.println(GREEN_BOLD + "================================================" + RESET);
-					System.out.println(WHITE_BOLD + "==========================================");
+							+ " ================");
+					System.out.println("================================================");
+					System.out.println("==========================================");
 					System.out.println("=============== Modifiers ================");
-					System.out.println("==========================================" + RESET);
+					System.out.println("==========================================");
 					System.out.println(sbModifier);
-					System.out.println(WHITE_BOLD + "==========================================");
+					System.out.println("==========================================");
 					System.out.println("=============== Visibility ===============");
-					System.out.println("==========================================" + RESET);
+					System.out.println("==========================================");
 					System.out.println(sbVisibility);
-					System.out.println(WHITE_BOLD + "==========================================");
+					System.out.println("==========================================");
 					System.out.println("=============== Class Schemes ============");
-					System.out.println("==========================================" + RESET);
+					System.out.println("==========================================");
 					System.out.println(sbInheritance);
-					System.out.println(WHITE_BOLD + "==========================================");
+					System.out.println("==========================================");
 					System.out.println("=============== Coupling =================");
-					System.out.println("==========================================" + RESET);
+					System.out.println("==========================================");
 					System.out.println(sbCoupling);
-					System.out.println(WHITE_BOLD + "==========================================");
+					System.out.println("==========================================");
 					System.out.println("=============== Call Hierarchy ===========");
-					System.out.println("==========================================" + RESET);
+					System.out.println("==========================================");
 					System.out.println(sbCall);
-				}
-				else {
+				} else {
 					// Créer un fichier et écrire les resultats
 					try {// créer un nouveau fichier qui stockera les informations de l'analyse ayant le
-						// nom de la classe traitée
-						// date de la création du fichier
+							// nom de la classe traitée
+							// date de la création du fichier
 						long now = System.currentTimeMillis();
 						// convertir le timestamp en date
 						Date date = new Date(now);
 						// créer un objet SimpleDateFormat qui convertira la date en format texte
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-						String path = directoryResultat + File.separator + currentClass.getcName() + "-" + sdf.format(date) + ".txt";
+						String path = directoryResultat + File.separator + currentClass.getcName() + "-"
+								+ sdf.format(date) + ".txt";
 
 						// créer dossier resultat
 						File dir = new File(directoryResultat);
@@ -338,15 +320,7 @@ public class JavaInterpreter {
 								.append(sbCoupling.get())
 								.append(sbCall.get());
 						// supprime les valeurs de couleur dans outResultat
-						fw.write(outResultat.toString()
-								.replace(RED, "")
-								.replace(GREEN_BOLD, "")
-								.replace(YELLOW_BOLD, "")
-								.replace(WHITE_BOLD, "")
-								.replace(WHITE_BOLD_BRIGHT, "")
-								.replace(RED, "")
-								.replace(YELLOW_BOLD_BRIGHT, "")
-								.replace(RESET, ""));
+						fw.write(outResultat.toString());
 						fw.close();
 					} catch (IOException e) {
 						System.err.println("IOException: " + e.getMessage());
