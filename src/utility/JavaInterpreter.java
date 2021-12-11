@@ -8,6 +8,7 @@ import pkgMethodCall.JavaMethodCall;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
@@ -127,18 +128,20 @@ public class JavaInterpreter {
 				} // end for
 
 				double total = nbrePublicAttribute + nbrePrivateAttribute + nbreProtectedAttribute;
+				DecimalFormat f = new DecimalFormat();
+				f.setMaximumFractionDigits(2);
 				if (total > 0) {
 					double pPublic = (nbrePublicAttribute / total) * 100;
 					double pProtected = (nbreProtectedAttribute / total) * 100;
 					double pPrivate = (nbrePrivateAttribute / total) * 100;
 
-					sbModifier.get().append("\tPourcentage des attributs Private: " + GREEN_BOLD).append(pPrivate)
+					sbModifier.get().append("\tPourcentage des attributs Private: " + GREEN_BOLD).append(f.format(pPrivate))
 							.append("%")
 							.append(RESET).append("\n");
-					sbModifier.get().append("\tPourcentage des attributs publics: " + GREEN_BOLD).append(pPublic)
+					sbModifier.get().append("\tPourcentage des attributs publics: " + GREEN_BOLD).append(f.format(pPublic))
 							.append("%")
 							.append(RESET).append("\n");
-					sbModifier.get().append("\tPourcentage des attributs Protected: " + GREEN_BOLD).append(pProtected)
+					sbModifier.get().append("\tPourcentage des attributs Protected: " + GREEN_BOLD).append(f.format(pProtected))
 							.append("%").append(RESET).append("\n");
 
 					total = nbrePrimitiveAttribute + nbreReferenceAttribute;
@@ -147,10 +150,10 @@ public class JavaInterpreter {
 
 					sbVisibility.get()
 							.append("\t% des attributs de type simple et % des attributs de référence (objet) :\n");
-					sbVisibility.get().append("\t\tSimple Type: " + GREEN_BOLD).append(pSimple).append("%")
+					sbVisibility.get().append("\t\tSimple Type: " + GREEN_BOLD).append(f.format(pSimple)).append("%")
 							.append(RESET)
 							.append("\n");
-					sbVisibility.get().append("\t\tRéférence Type: " + GREEN_BOLD).append(pReference).append("%")
+					sbVisibility.get().append("\t\tRéférence Type: " + GREEN_BOLD).append(f.format(pReference)).append("%")
 							.append(RESET).append("\n");
 
 					sbVisibility.get().append("\tclasse à visibilité permanente : \n");
@@ -211,7 +214,7 @@ public class JavaInterpreter {
 											.append(RESET);
 									sbCall.get().append(" | classe appartenance : " + GREEN_BOLD)
 											.append(otherClass.getcName()).append(RESET);
-									sbCall.get().append(" | accès : STATIC Method");
+									sbCall.get().append(" | accès : STATIC Method").append("\n");
 
 								} else { // via variable instance
 									sbCall.get().append("\n\t\tappel " + GREEN_BOLD)
@@ -222,7 +225,7 @@ public class JavaInterpreter {
 											.append(RESET);
 									sbCall.get().append(" | classe d'appartenance : " + GREEN_BOLD)
 											.append(otherClass.getcName()).append(RESET);
-									sbCall.get().append(" | accès : Variable Instance");
+									sbCall.get().append(" | accès : Variable Instance").append("\n");
 								}
 
 								foundReference = true;
@@ -313,12 +316,12 @@ public class JavaInterpreter {
 						// créer dossier resultat
 						File dir = new File(directoryResultat);
 						if (!dir.exists()) {
-							boolean f = dir.mkdir();
+							boolean isDirectoryCreate = dir.mkdir();
 						} // Le fichier a été crée
 
 						// si le fichier n'existe, le créer
 						if (!new File(path).exists()) {
-							boolean f = new File(path).createNewFile();
+							boolean isFileCreate = new File(path).createNewFile();
 						}
 
 						FileWriter fw = new FileWriter(path, true);
@@ -345,17 +348,18 @@ public class JavaInterpreter {
 								.replace(YELLOW_BOLD_BRIGHT, "")
 								.replace(RESET, ""));
 						fw.close();
-						outResultat = new StringBuilder();
-						sbModifier.set(new StringBuilder());
-						sbVisibility.set(new StringBuilder());
-						sbInheritance.set(new StringBuilder());
-						sbCoupling.set(new StringBuilder());
-						sbCall.set(new StringBuilder());
 					} catch (IOException e) {
 						System.err.println("IOException: " + e.getMessage());
 						e.printStackTrace();
 					}
 				} // end else
+
+				outResultat = new StringBuilder();
+				sbModifier.set(new StringBuilder());
+				sbVisibility.set(new StringBuilder());
+				sbInheritance.set(new StringBuilder());
+				sbCoupling.set(new StringBuilder());
+				sbCall.set(new StringBuilder());
 			}); // end read currentClass
 		}); // end read file
 	} // end method
