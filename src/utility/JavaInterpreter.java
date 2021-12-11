@@ -28,7 +28,7 @@ public class JavaInterpreter {
 	public static final String BLACK_BACKGROUND = "\033[40m";  // BLACK
 	private final JavaObjetManager objectManager;
 	private StringBuilder outResultat = new StringBuilder();
-	public static final String directoryResultat = "resultat";
+	public static final String directoryResultat = "Output";
 
 	// constructor
 	public JavaInterpreter(JavaObjetManager objectManager) {
@@ -38,7 +38,7 @@ public class JavaInterpreter {
 	/**
 	 * Methode qui permet d'afficher les resultats de l'analyse
 	 */
-	public void showStatisticToConsole() {
+	public void showStatisticToConsole(boolean allowShowConsole) {
 		AtomicReference<StringBuilder> sbModifier = new AtomicReference<>(new StringBuilder());
 		AtomicReference<StringBuilder> sbVisibility = new AtomicReference<>(new StringBuilder());
 		AtomicReference<StringBuilder> sbCoupling = new AtomicReference<>(new StringBuilder());
@@ -270,31 +270,34 @@ public class JavaInterpreter {
 					sbCall.get().append(RED + "\n\tPas de reference direct.\n").append(RESET);
 				}
 
-				System.out.println(GREEN_BOLD + "=================================================");
-				System.out.println(WHITE_BOLD_BRIGHT + "===============" + YELLOW_BOLD_BRIGHT + " La Classe "
-						+ currentClass.getcName()
-						+ WHITE_BOLD_BRIGHT + " ================");
-				System.out.println(GREEN_BOLD + "================================================" + RESET);
-				System.out.println(WHITE_BOLD + "==========================================");
-				System.out.println("=============== Modifiers ================");
-				System.out.println("==========================================" + RESET);
-				System.out.println(sbModifier);
-				System.out.println(WHITE_BOLD + "==========================================");
-				System.out.println("=============== Visibility ===============");
-				System.out.println("==========================================" + RESET);
-				System.out.println(sbVisibility);
-				System.out.println(WHITE_BOLD + "==========================================");
-				System.out.println("=============== Class Schemes ============");
-				System.out.println("==========================================" + RESET);
-				System.out.println(sbInheritance);
-				System.out.println(WHITE_BOLD + "==========================================");
-				System.out.println("=============== Coupling =================");
-				System.out.println("==========================================" + RESET);
-				System.out.println(sbCoupling);
-				System.out.println(WHITE_BOLD + "==========================================");
-				System.out.println("=============== Call Hierarchy ===========");
-				System.out.println("==========================================" + RESET);
-				System.out.println(sbCall);
+				// Si l'affiche à la console est demandée
+				if(allowShowConsole){
+					System.out.println(GREEN_BOLD + "=================================================");
+					System.out.println(WHITE_BOLD_BRIGHT + "===============" + YELLOW_BOLD_BRIGHT + " La Classe "
+							+ currentClass.getcName()
+							+ WHITE_BOLD_BRIGHT + " ================");
+					System.out.println(GREEN_BOLD + "================================================" + RESET);
+					System.out.println(WHITE_BOLD + "==========================================");
+					System.out.println("=============== Modifiers ================");
+					System.out.println("==========================================" + RESET);
+					System.out.println(sbModifier);
+					System.out.println(WHITE_BOLD + "==========================================");
+					System.out.println("=============== Visibility ===============");
+					System.out.println("==========================================" + RESET);
+					System.out.println(sbVisibility);
+					System.out.println(WHITE_BOLD + "==========================================");
+					System.out.println("=============== Class Schemes ============");
+					System.out.println("==========================================" + RESET);
+					System.out.println(sbInheritance);
+					System.out.println(WHITE_BOLD + "==========================================");
+					System.out.println("=============== Coupling =================");
+					System.out.println("==========================================" + RESET);
+					System.out.println(sbCoupling);
+					System.out.println(WHITE_BOLD + "==========================================");
+					System.out.println("=============== Call Hierarchy ===========");
+					System.out.println("==========================================" + RESET);
+					System.out.println(sbCall);
+				}
 
 				// Créer un fichier et écrire les resultats
 				try {// créer un nouveau fichier qui stockera les informations de l'analyse ayant le

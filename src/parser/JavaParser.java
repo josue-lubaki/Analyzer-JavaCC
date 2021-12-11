@@ -59,6 +59,7 @@ public class JavaParser implements JavaParserConstants {
     boolean exit = false;
     boolean pathNull = true;
     boolean resultDisponible = false;
+    boolean allowShowConsole = false;
     String pathFile = null;
     if (args.length == 0) {
       while(!exit) {
@@ -73,7 +74,12 @@ public class JavaParser implements JavaParserConstants {
                         System.out.println(GREEN_BOLD + "(ALLOWED)" + RESET);
                 else
                         System.out.println(RED + "(NOT ALLOWED)" + RESET);
-                System.out.print(WHITE_BOLD_BRIGHT + "\u005ct 3. " + RESET + "Voir le resultat sauvegarde dans le dossier " + directoryResultat);
+                System.out.print(WHITE_BOLD_BRIGHT + "\u005ct 3. " + RESET + "Ouvrir le fichier de resultat saved du dossier \u005c"" + directoryResultat + "\u005c"");
+                if(resultDisponible)
+                        System.out.println(GREEN_BOLD + " (ALLOWED)" + RESET);
+                else
+                        System.out.println(RED + " (NOT ALLOWED)" + RESET);
+                System.out.print(WHITE_BOLD_BRIGHT + "\u005ct 4. " + RESET + "Voir tous les resultats sur la console ");
                 if(resultDisponible)
                         System.out.println(GREEN_BOLD + " (ALLOWED)" + RESET);
                 else
@@ -97,7 +103,7 @@ public class JavaParser implements JavaParserConstants {
                                         pathNull = false;
                 }
                 else if(indice == 2 && !pathNull) {
-                  lancerAnalyse(pathFile);
+                  lancerAnalyse(pathFile, false);
                   resultDisponible = true;
                 }
                 else if(indice == 2) {
@@ -122,7 +128,7 @@ public class JavaParser implements JavaParserConstants {
                                         System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez entrer l'indice du fichier");
                         System.out.print("Clavier |> ");
                         fChoiceString = new Scanner(System.in).nextLine();
-                      } while(String.valueOf(fChoice).matches("[0-9]") && Integer.parseInt(fChoiceString) <= fileListResultat.size());
+                      } while(!fChoiceString.matches("[0-9]") || Integer.parseInt(fChoiceString) > fileListResultat.size() || Integer.parseInt(fChoiceString) == 0);
                                 fChoice = Integer.parseInt(fChoiceString) - 1;
                                 String nameFile = fileListResultat.get(fChoice).getName();
                                 List<String> output =  readFile(nameFile);
@@ -133,9 +139,12 @@ public class JavaParser implements JavaParserConstants {
                    }
                 System.out.print(BLACK_BACKGROUND + "========================================================================================================================================================================" + RESET);
                  }
+                 else if(indice == 4 && resultDisponible) {
+                                lancerAnalyse(pathFile, true);
+                   }
         }
     } else if (args.length == 1) {
-       lancerAnalyse(args[0]);
+       lancerAnalyse(args[0], true);
     } else {
       System.out.println(RED + "Sorry, nous ne prenons pas en charge ce nombre d'entree !" + RESET);
     }
@@ -147,7 +156,7 @@ public class JavaParser implements JavaParserConstants {
 * @return List<String>
 */
   private static List<String> readFile(String fileName) {
-                String path = "resultat/"+ fileName;
+                String path = directoryResultat + "/" + fileName;
 
                 List<String> lines = new ArrayList<String>();
                 try {
@@ -172,10 +181,10 @@ public class JavaParser implements JavaParserConstants {
 * Methode qui permet de lancer l'analyse sur le path dont l'utilisateur a entré
 * @param path le chemin des fichiers ou dossier à analyser
 */
-  private static void lancerAnalyse(String path) {
+  private static void lancerAnalyse(String path, boolean allowShowConsole) {
                 File file = new File(path);
         fileList = bindingFile(file);
-        traitment(fileList, file);
+        traitment(fileList, file, allowShowConsole);
     }
 
 /**
@@ -220,7 +229,7 @@ public class JavaParser implements JavaParserConstants {
 * @param fileList la liste contenant tous les fichiers java à analyser
 * @param file correspond au fichier ouvert pour traitement
 */
-        public static void traitment(List<File> fileList, File file){
+        public static void traitment(List<File> fileList, File file, boolean allowShowConsole){
             JavaObjetManager om = new JavaObjetManager();
                 JavaParser parser;
                 int error = 0;
@@ -239,7 +248,7 @@ public class JavaParser implements JavaParserConstants {
 
                         if(error == 0) {
                                 JavaInterpreter interpreter = new JavaInterpreter(om);
-                                interpreter.showStatisticToConsole();
+                                interpreter.showStatisticToConsole(allowShowConsole);
                         }
         }
 
@@ -4569,70 +4578,6 @@ public class JavaParser implements JavaParserConstants {
     finally { jj_save(54, xla); }
   }
 
-  private boolean jj_3R_79() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(15)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(20)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(17)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(51)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(40)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(42)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(33)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(26)) return true;
-    }
-    }
-    }
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  private boolean jj_3R_236() {
-    if (jj_scan_token(SUPER)) return true;
-    if (jj_3R_72()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_235() {
-    if (jj_scan_token(EXTENDS)) return true;
-    if (jj_3R_72()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_162() {
-    if (jj_scan_token(WHILE)) return true;
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_75()) return true;
-    if (jj_scan_token(RPAREN)) return true;
-    if (jj_3R_89()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_229() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_235()) {
-    jj_scanpos = xsp;
-    if (jj_3R_236()) return true;
-    }
-    return false;
-  }
-
-  private boolean jj_3R_215() {
-    if (jj_3R_229()) return true;
-    return false;
-  }
-
   private boolean jj_3R_179() {
     if (jj_3R_72()) return true;
     return false;
@@ -7385,6 +7330,70 @@ public class JavaParser implements JavaParserConstants {
     if (jj_3R_75()) return true;
     if (jj_scan_token(RPAREN)) return true;
     if (jj_scan_token(SEMICOLON)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_79() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(15)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(20)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(17)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(51)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(40)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(42)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(33)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(26)) return true;
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_236() {
+    if (jj_scan_token(SUPER)) return true;
+    if (jj_3R_72()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_235() {
+    if (jj_scan_token(EXTENDS)) return true;
+    if (jj_3R_72()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_162() {
+    if (jj_scan_token(WHILE)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_75()) return true;
+    if (jj_scan_token(RPAREN)) return true;
+    if (jj_3R_89()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_229() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_235()) {
+    jj_scanpos = xsp;
+    if (jj_3R_236()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3R_215() {
+    if (jj_3R_229()) return true;
     return false;
   }
 
