@@ -66,7 +66,6 @@ public class JavaParser
 {
 	private JavaObjetManager objectManager;
 	private static List<File> fileList;
-
     /**
      * Constructor for JavaParser.
      * @param file the file to parse
@@ -106,42 +105,118 @@ public class JavaParser
   // for f in /some/directory/full/of/java/files/*.java; do java -cp . JavaParser $f; done
   public static void main(String[] args) {
     int indice = -1;
+    String indiceString = "";
     boolean exit = false;
     boolean pathNull = true;
+    boolean resultDisponible = false;
     String pathFile = null;
     if (args.length == 0) {
       while(!exit) {
-        do { 
-        	System.out.println("\t\t\t\t\tMENU PRINCIPAL");
-	        System.out.println("\t 1. Entrer le path du fichier à analyser");
+        do {
+	      	System.out.println(YELLOW_BOLD_BRIGHT + "\n\n\t\t\t\t\t==================================");
+	    	System.out.println(YELLOW_BOLD_BRIGHT + "\t\t\t\t\t========  MENU PRINCIPAL  ========");
+	    	System.out.println(YELLOW_BOLD_BRIGHT + "\t\t\t\t\t==================================" + RESET);
+	        System.out.println(WHITE_BOLD_BRIGHT + "\t 1. " + RESET + "Entrer le path du fichier à analyser");
+	        System.out.println(WHITE_BOLD + "\t\t Note: Vous pouvez entrer le path d'un fichier ou le path d'un dossier contenant les fichiers .java" + RESET);
+	        System.out.print(WHITE_BOLD_BRIGHT + "\t 2. " + RESET + "Lancer l'analyse ");
 	        if(!pathNull)
-	        	System.out.println("\t 2. Lancer l'analyse");
-	        System.out.println("\t\t Note: Vous pouvez entrer le path pour d'un fichier ou le path d'un dossier contenant les fichiers .java");
-	        System.out.println("\t 0. " + RED + "Quitter" + RESET);
-	        indice = Integer.parseInt(new Scanner(System.in).nextLine());
-	      }while(!String.valueOf(indice).matches("[0-9]"));
+	        	System.out.println(GREEN_BOLD + "(ALLOWED)" + RESET);
+	        else
+	        	System.out.println(RED + "(NOT ALLOWED)" + RESET);
+	        System.out.print(WHITE_BOLD_BRIGHT + "\t 3. " + RESET + "Voir le resultat sauvegarde dans le dossier " + directoryResultat);
+	        if(resultDisponible)
+	        	System.out.println(GREEN_BOLD + " (ALLOWED)" + RESET);
+	        else
+	        	System.out.println(RED + " (NOT ALLOWED)" + RESET);
+	        System.out.println(WHITE_BOLD_BRIGHT + "\t 0. " + RESET + "Quitter");
+	        System.out.print("Clavier |> ");
+	        indiceString = new Scanner(System.in).nextLine();
+	      } while(!indiceString.matches("[0-9]"));
 
+	      indice = Integer.parseInt(indiceString);
+
+		  // to exit application
 	      if(indice == 0) {
 	        	exit = true;
 	      }
 	      else if(indice == 1) {
-				System.out.println("Veuillez entrer le path des fichiers à analyser (exemple : " + GREEN_BOLD + "src/Test" + RESET + ")");
+				System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez entrer le path des fichiers à analyser (exemple : " + GREEN_BOLD + "src/Test" + RESET + ")");
+				System.out.print("Clavier |> ");
 		        pathFile = new Scanner(System.in).nextLine();
-		        
+		        if(pathFile != null)
+					pathNull = false;
 	        }
-	        else if(indice == 2) {
+	        else if(indice == 2 && !pathNull) {
 	          lancerAnalyse(pathFile);
-	          }
-
-	        if(pathFile != null)
-				pathNull = false;
+	          resultDisponible = true;
+	        }
+	        else if(indice == 2) { 
+	        	System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Sorry, le parser n'a aucun fichier à analyser...");
+	        	System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez commencer par entrer le path d'un fichier ou dossier !");	        	
+	       }
+	       else if(indice == 3 && !resultDisponible) { 
+	        	System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Sorry, Les resultats ne sont pas encore prêt");
+	        	System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez commencer par lancer l'analyser de l'option 2 ");	        	
+	       }
+	       else if(indice == 3 & resultDisponible) {
+		        int fChoice = -1;
+		        String fChoiceString = "";
+        System.out.println("\t\tVoici la liste des fichiers contanent le resultat d'analyse");
+		        System.out.println(WHITE_BOLD + "\t\tNote : le format est \"NomClasse-Annee-Mois-Jour_Heure-Minutes.txt\"" + RESET);
+		        List<File> fileListResultat = JavaFileExplorer.getAllJavaFiles(new File(directoryResultat), 0, ".txt");
+	              assert fileListResultat != null;
+	              for(int i = 0 ; i < fileListResultat.size(); i++) {
+                	System.out.println(WHITE_BOLD_BRIGHT + "\t\t\t" + (i+1) + ". " + RESET + fileListResultat.get(i).getName());
+	              }
+				do { 
+					System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez entrer l'indice du fichier");
+	                System.out.print("Clavier |> ");
+	                fChoiceString = new Scanner(System.in).nextLine();
+	              } while(String.valueOf(fChoice).matches("[0-9]") && Integer.parseInt(fChoiceString) <= fileListResultat.size());
+				fChoice = Integer.parseInt(fChoiceString) - 1;
+				String nameFile = fileListResultat.get(fChoice).getName();
+				List<String> output =  readFile(nameFile);
+				System.out.println();
+				System.out.println(BLACK_BACKGROUND + "=========================================================== FILE " + nameFile + " =========================================================" +  WHITE_BOLD);
+                for(String line : output) {
+                        System.out.println(line);
+                   }
+                System.out.print(BLACK_BACKGROUND + "========================================================================================================================================================================" + RESET);
+	         }
         }
     } else if (args.length == 1) {
        lancerAnalyse(args[0]);
     } else {
-      System.out.println(RED + "Désolé, nous ne prenons pas en charge ce nombre d'entrée !" + RESET);
+      System.out.println(RED + "Sorry, nous ne prenons pas en charge ce nombre d'entree !" + RESET);
     }
   }
+
+/**
+* Methode qui permet de lire le fichier, pour retourner toutes les lignes de celle-ci dans une liste
+* @param fileName le nom du fichier à lire
+* @return List<String>
+*/
+  private static List<String> readFile(String fileName) {
+		String path = "resultat/"+ fileName;
+
+		List<String> lines = new ArrayList<String>();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(path));
+			String line;
+			while((line = br.readLine()) != null) {
+					lines.add(line);
+			   }
+			br.close();
+		  }catch (FileNotFoundException e) {
+            System.out.println(WHITE_BOLD_BRIGHT  + "COMPUTER : " + RESET + "Le fichier \""
+                    + GREEN_BOLD + fileName + RESET + "\" est introuvable");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return lines;
+    }
 
 /**
 * Methode qui permet de lancer l'analyse sur le path dont l'utilisateur a entré
@@ -149,7 +224,7 @@ public class JavaParser
 */
   private static void lancerAnalyse(String path) {
 		File file = new File(path);
-        List<File> fileList = bindingFile(file);
+        fileList = bindingFile(file);
         traitment(fileList, file);
     }
 
@@ -171,7 +246,7 @@ public class JavaParser
 
           // Check if it is a directory or a single file
       	if(!file.isFile()) {
-			List<File> javaFiles = JavaFileExplorer.getAllJavaFiles(file, 999);
+			List<File> javaFiles = JavaFileExplorer.getAllJavaFiles(file, 999, ".java");
 			if(javaFiles != null) {
 				list.addAll(javaFiles);
 				return list;
@@ -204,7 +279,7 @@ public class JavaParser
 					parser = new JavaParser(fs, om);
 					parser.getObjectManager().push(new JavaFile(file));
 					parser.CompilationUnit();
-					System.out.println(String.format("%s: executé avec succès", fs.getName()));
+					System.out.println(String.format("%s: analyse en cours...", fs.getName()));
 				}
 				catch(ParseException e) {
 					error++;
@@ -739,10 +814,9 @@ void ClassOrInterfaceDeclaration(int modifiers):
       JavaInterface i = new JavaInterface(nameToken.toString());
 	  i.setiScope(modifiers);
 	  //NOTE: We add each interface it inherits from	
-      for(int j = 0; j < extendsList.size(); j++)
-      {
-        i.addInterface(new JavaInterface(extendsList.get(j)));
-      }	
+       for (String s : extendsList) {
+                 i.addInterface(new JavaInterface(s));
+       }
       //NOTE: Pass to the object manager
       objectManager.addToCurrentObject(i);
     }
@@ -756,9 +830,8 @@ void ClassOrInterfaceDeclaration(int modifiers):
         c.setSuperClass(extendsList.get(0));
       }
 	  //NOTE: We add each interface	
-      for(int i = 0; i < implementsList.size(); i++)
-      {
-        c.addInterface(new JavaInterface(implementsList.get(i)));
+      for (String s : implementsList) {
+        c.addInterface(new JavaInterface(s));
       }
       //NOTE: Pass to the object manager
       objectManager.addToCurrentObject(c);

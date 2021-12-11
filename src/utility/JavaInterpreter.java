@@ -8,6 +8,7 @@ import pkgMethodCall.JavaMethodCall;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicReference;
@@ -24,8 +25,10 @@ public class JavaInterpreter {
 	public static final String RED = "\033[0;31m"; // RED
 	public static final String WHITE_BOLD = "\033[1;37m"; // WHITE
 	public static final String WHITE_BOLD_BRIGHT = "\033[1;97m"; // WHITE
+	public static final String BLACK_BACKGROUND = "\033[40m";  // BLACK
 	private final JavaObjetManager objectManager;
 	private StringBuilder outResultat = new StringBuilder();
+	public static final String directoryResultat = "resultat";
 
 	// constructor
 	public JavaInterpreter(JavaObjetManager objectManager) {
@@ -129,9 +132,11 @@ public class JavaInterpreter {
 					double pProtected = (nbreProtectedAttribute / total) * 100;
 					double pPrivate = (nbrePrivateAttribute / total) * 100;
 
-					sbModifier.get().append("\tPourcentage des attributs Private: " + GREEN_BOLD).append(pPrivate).append("%")
+					sbModifier.get().append("\tPourcentage des attributs Private: " + GREEN_BOLD).append(pPrivate)
+							.append("%")
 							.append(RESET).append("\n");
-					sbModifier.get().append("\tPourcentage des attributs publics: " + GREEN_BOLD).append(pPublic).append("%")
+					sbModifier.get().append("\tPourcentage des attributs publics: " + GREEN_BOLD).append(pPublic)
+							.append("%")
 							.append(RESET).append("\n");
 					sbModifier.get().append("\tPourcentage des attributs Protected: " + GREEN_BOLD).append(pProtected)
 							.append("%").append(RESET).append("\n");
@@ -140,8 +145,10 @@ public class JavaInterpreter {
 					double pSimple = (nbrePrimitiveAttribute / total) * 100;
 					double pReference = (nbreReferenceAttribute / total) * 100;
 
-					sbVisibility.get().append("\t% des attributs de type simple et % des attributs de référence (objet) :\n");
-					sbVisibility.get().append("\t\tSimple Type: " + GREEN_BOLD).append(pSimple).append("%").append(RESET)
+					sbVisibility.get()
+							.append("\t% des attributs de type simple et % des attributs de référence (objet) :\n");
+					sbVisibility.get().append("\t\tSimple Type: " + GREEN_BOLD).append(pSimple).append("%")
+							.append(RESET)
 							.append("\n");
 					sbVisibility.get().append("\t\tRéférence Type: " + GREEN_BOLD).append(pReference).append("%")
 							.append(RESET).append("\n");
@@ -264,7 +271,8 @@ public class JavaInterpreter {
 				}
 
 				System.out.println(GREEN_BOLD + "=================================================");
-				System.out.println(WHITE_BOLD_BRIGHT + "===============" + YELLOW_BOLD_BRIGHT + " La Classe " + currentClass.getcName()
+				System.out.println(WHITE_BOLD_BRIGHT + "===============" + YELLOW_BOLD_BRIGHT + " La Classe "
+						+ currentClass.getcName()
 						+ WHITE_BOLD_BRIGHT + " ================");
 				System.out.println(GREEN_BOLD + "================================================" + RESET);
 				System.out.println(WHITE_BOLD + "==========================================");
@@ -293,10 +301,14 @@ public class JavaInterpreter {
 						// nom de la classe traitée
 						// date de la création du fichier
 					long now = System.currentTimeMillis();
-					String path = "resultat" + File.separator + currentClass.getcName() + "-" + now + ".txt";
+					// convertir le timestamp en date
+					Date date = new Date(now);
+					// créer un objet SimpleDateFormat qui convertira la date en format texte
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+					String path = directoryResultat + File.separator + currentClass.getcName() + "-" + sdf.format(date) + ".txt";
 
 					// créer dossier resultat
-					File dir = new File("resultat");
+					File dir = new File(directoryResultat);
 					if (!dir.exists()) {
 						boolean f = dir.mkdir();
 					} // Le fichier a été crée
