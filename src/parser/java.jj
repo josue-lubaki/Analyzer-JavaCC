@@ -109,7 +109,6 @@ public class JavaParser
     boolean exit = false;
     boolean pathNull = true;
     boolean resultDisponible = false;
-    boolean allowShowConsole = false;
     String pathFile = null;
     if (args.length == 0) {
       while(!exit) {
@@ -151,6 +150,9 @@ public class JavaParser
 		        pathFile = new Scanner(System.in).nextLine();
 		        if(pathFile != null)
 					pathNull = false;
+
+				// reinitialiser
+				resultDisponible = false;
 	        }
 	        else if(indice == 2 && !pathNull) {
 	          lancerAnalyse(pathFile, false);
@@ -161,14 +163,14 @@ public class JavaParser
 	        	System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez commencer par entrer le path d'un fichier ou dossier !");	        	
 	       }
 	       else if(indice == 3 && !resultDisponible) { 
-	        	System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Sorry, Les resultats ne sont pas encore prêt");
+	        	System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Sorry, Les resultats ne sont pas encore pret");
 	        	System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez commencer par lancer l'analyser de l'option 2 ");	        	
 	       }
 	       else if(indice == 3 & resultDisponible) {
 		        int fChoice = -1;
 		        String fChoiceString = "";
         System.out.println("\t\tVoici la liste des fichiers contanent le resultat d'analyse");
-		        System.out.println(WHITE_BOLD + "\t\tNote : le format est \"NomClasse-Annee-Mois-Jour_Heure-Minutes.txt\"" + RESET);
+		        System.out.println(WHITE_BOLD + "\t\tNote : le format est \"NomClasse-Annee-Mois-Jour_Heure-Minutes-secondes.txt\"" + RESET);
 		        List<File> fileListResultat = JavaFileExplorer.getAllJavaFiles(new File(directoryResultat), 0, ".txt");
 	              assert fileListResultat != null;
 	              for(int i = 0 ; i < fileListResultat.size(); i++) {
@@ -192,6 +194,10 @@ public class JavaParser
 	         else if(indice == 4 && resultDisponible) {
 				lancerAnalyse(pathFile, true);
 	           }
+            else if(indice == 4 && !resultDisponible) {
+				System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Sorry, Les resultats ne sont pas encore pret");
+	        	System.out.println(WHITE_BOLD_BRIGHT + "COMPUTER " + RESET + ": Veuillez commencer par lancer l'analyser de l'option 2 ");
+           	}
         }
     } else if (args.length == 1) {
        lancerAnalyse(args[0], true);
@@ -624,23 +630,6 @@ TOKEN :
 /**
  * Main entry point for parsing java files.
  */
-/*void CompilationUnit():
-{
-  JavaFile currentFile = (JavaFile) objectManager.peek();
-  String buffer = "";
-}
-{
-      (
-          
-           [ LOOKAHEAD(2) PackageDeclaration() ]
-           ( ImportDeclaration() )*
-           (
-             TypeDeclaration()
-           )*
-           
-           <EOF>
-       )
-}*/
 void CompilationUnit():
 {
   JavaFile currentFile = (JavaFile) objectManager.peek();
@@ -661,6 +650,10 @@ void CompilationUnit():
   <EOF>
 }
 
+/**
+* Récuperation du nom de package
+* @return String
+*/
 String PackageDeclaration():
 {
   String name = "";
@@ -671,15 +664,12 @@ String PackageDeclaration():
     return name;
   }
 }
-/*String PackageDeclaration():
-{
-  String name = "";
-}
-{
-    
-       <PACKAGE> name = Name() ";"  
-}*/
 
+
+/**
+* Récuperation des declarations importées
+* @return String
+*/
 String ImportDeclaration():
 {
   String name = "";
@@ -690,22 +680,11 @@ String ImportDeclaration():
 	return name;
   }
 }
-/*void  ImportDeclaration():
-{
-}
-{
-    
-        <IMPORT> [ <STATIC> ] Name() [ "." "*" ] ";"
-}*/
 
-/*
- * Modifiers. We match all modifiers in a single rule to reduce the chances of
- * syntax errors for simple modifier mistakes. It will also enable us to give
- * better error messages.
- * danson: the downside is this allows modifiers that aren't allowed
- * in some constructs. 
- * TODO: write productions for the actual modifiers allowed for each construct.
- */
+/**
+* Récuperation de la portée sous forme d'entier
+* @return int
+*/
 int Modifiers():
 {
    int modifiers = 0;
@@ -744,42 +723,10 @@ int Modifiers():
     return modifiers;
  }
 }
-/*void Modifiers():
-{
-}
-{
- (
-  LOOKAHEAD(2)
-  (
-   <PUBLIC>
-  |
-   <STATIC>
-  |
-   <PROTECTED>
-  |
-   <PRIVATE> 
-  |
-   <FINAL>
-  |
-   <ABSTRACT>
-  |
-   <SYNCHRONIZED>
-  |
-   <NATIVE> 
-  |
-   <TRANSIENT>
-  |
-   <VOLATILE>
-  |
-   <STRICTFP>
-  |
-   Annotation()
-  )
- )*
-}*/
+
 
 /*
- * Declaration syntax follows.
+ * Suivre la porté des classes, interfaces
  */
 
 // Handle classes, interfaces, enums, and annotations.
@@ -788,8 +735,6 @@ void TypeDeclaration():
   int modifiers;
 }
 {
-    
-
           ";"
         |
          modifiers = Modifiers()
@@ -803,6 +748,9 @@ void TypeDeclaration():
           )
 }
 
+/**
+* Pour chaque classe et interface, faire suivre la porté @code{modifiers}
+*/
 void ClassOrInterfaceDeclaration(int modifiers):
 {	
    	boolean isInterface = false;
@@ -857,27 +805,10 @@ void ClassOrInterfaceDeclaration(int modifiers):
   }
 }
 
-/*void ClassOrInterfaceDeclaration():
-{
-}
-{
-    
-      ( 
-          "class" | "interface" 
-      )
-      <IDENTIFIER>
-      [ TypeParameters() ]
-      [ ExtendsList() ]
-      [ ImplementsList() ]
-      ClassOrInterfaceBody()
-
-      /* danson, added this check for trailing semi-colon.  Apparently, this has been
-      legal since the beginning of Java, some sort of a C hold-over.  Sun's latest
-      Java 1.5 compiler doesn't mind it, but this parser whined if the class has a
-      semi-colon after the last }. */
-      //[ LOOKAHEAD(2) <SEMICOLON> ]
-//}
-
+/**
+* Récuperation la liste des extends, considérer que la classe ne peut pas extends plus d'une classe
+* @return List<String>
+*/
 List<String> ExtendsList(boolean isInterface):
 {
    List<String> extendsList = new ArrayList<String>();
@@ -902,17 +833,10 @@ List<String> ExtendsList(boolean isInterface):
    }
 }
 
-/*void ExtendsList():
-{
-}
-{
-    
-
-       "extends" ClassOrInterfaceType()
-       ( "," ClassOrInterfaceType() )*
-
-}*/
-
+/**
+* Récuperation la liste des implementations, considérer qu'une interface ne peut pas implementer une autre interface
+* @return List<String>
+*/
 List<String> ImplementsList(boolean isInterface):
 {
 	List<String> implementsList = new ArrayList<String>();
@@ -934,44 +858,40 @@ List<String> ImplementsList(boolean isInterface):
       return implementsList;
    }
 }
-/*void ImplementsList():
-{
-}
-{
-    
 
-        "implements" ClassOrInterfaceType()
-       ( "," ClassOrInterfaceType() )*
-
-}*/
-
+/**
+* Savoir qu'une Enumération ne peut implementer quoique ce soit  @see { false }
+*/
 void EnumDeclaration(int modifiers):
 {
 }
 {
-    
         "enum" <IDENTIFIER>
         [ ImplementsList(false) ]
         EnumBody()
 
 }
 
+/**
+* Savoir que une Enumération n'est pas contenir une classe ou une interface @see { false }
+*/
 void EnumBody():
 {
 }
 {
-    
         "{"
         EnumConstant() ( LOOKAHEAD(2) "," EnumConstant() )* [","]
         [ ";" ( ClassOrInterfaceBodyDeclaration(false) )* ]
         "}"
 }
 
+/**
+* Savoir que les constantes d'une énumérations ne peuvent contenir une classe ou une interface @see { false }
+*/
 void EnumConstant():
 {
 }
 {
-    
         <IDENTIFIER> [ Arguments() ] [ ClassOrInterfaceBody(false) ]
 }
 
@@ -979,7 +899,6 @@ void TypeParameters():
 {
 }
 {
-    
         (
             "<"
             (
@@ -997,7 +916,6 @@ void TypeParameter():
 {
 }
 {
-    
         (
             <IDENTIFIER> [ TypeBound() ]
         )
@@ -1008,8 +926,6 @@ void TypeBound():
 {
 }
 {
-    
-
         (
             "extends"
             ClassOrInterfaceType()
@@ -1020,12 +936,11 @@ void TypeBound():
         )
 }
 
+// le corps d'une classe ou interface
 void ClassOrInterfaceBody(boolean isInterface):
 {
 }
 {
-    
-
         (
             "{"
             (
@@ -1069,40 +984,9 @@ void ClassOrInterfaceBodyDeclaration(boolean isInterface):
   ";"
 }
 
-/*void ClassOrInterfaceBodyDeclaration():
-{
-}
-{
-    
-          (
-          LOOKAHEAD(2)
-          Initializer()
-        |
-          Modifiers() // Just get all the modifiers out of the way. If you want to do
-                      // more checks, pass the modifiers down to the member
-          (
-              LOOKAHEAD(3)
-              ClassOrInterfaceDeclaration()
-            |
-              EnumDeclaration()
-            |
-              LOOKAHEAD( [ TypeParameters() ] <IDENTIFIER> "(" )
-              ConstructorDeclaration()
-            |
-              LOOKAHEAD( Type() <IDENTIFIER> ( "[" "]" )* ( "," | "=" | ";" ) )
-              FieldDeclaration()
-            |
-              LOOKAHEAD(2)
-              AnnotationTypeDeclaration()
-            |
-              MethodDeclaration()
-
-          )
-        |
-          ";"  
-          )
-}*/
-
+/**
+* initialiser le nom et type des champs tout en faisant suivre la portée
+*/
 void FieldDeclaration(int modifiers):
 {
   JavaAttribute a = new JavaAttribute();
@@ -1127,22 +1011,10 @@ void FieldDeclaration(int modifiers):
     )* ";"
 }
 
-/*void FieldDeclaration():
-{
-}
-{
-    
-
-        (
-            // Modifiers are already matched in the caller
-            Type() VariableDeclarator()
-            (
-                "," VariableDeclarator()
-            )*
-            ";"
-        )
-}*/
-
+/**
+* Récuperation du nom de la variable declarée
+* @return String
+*/
 String VariableDeclarator():
 {
   String name = "";
@@ -1154,16 +1026,10 @@ String VariableDeclarator():
   }
 }
 
-/*void VariableDeclarator():
-{
-}
-{
-    
-        (
-            VariableDeclaratorId() [ "=" VariableInitializer() ]
-        )
-}*/
-
+/**
+* Récuperation de l'identifiacteur de la variable declarée
+* @return String
+*/
 String VariableDeclaratorId():
 {
 	Token nameToken;
@@ -1175,38 +1041,29 @@ String VariableDeclaratorId():
   }
 }
 
-/*void VariableDeclaratorId():
-{
-}
-{
-    
-        <IDENTIFIER> 
-        ( 
-            "[" "]" 
-        )*
-}*/
 
 void VariableInitializer():
 {
 }
 {
-    
-
           ArrayInitializer()
         |
           Expression()
 }
 
+
 void ArrayInitializer():
 {
 }
 {
-    
-
         "{" [ VariableInitializer() ( LOOKAHEAD(2) "," VariableInitializer() )* ] [ "," ] "}"
 
 }
 
+/**
+* Récuperation des informations de la methode declarée, ainsi que initilisé son type et faire suivre la portée
+* 
+*/
 void MethodDeclaration(int modifiers):
 {
   JavaMethod m;
@@ -1230,20 +1087,10 @@ void MethodDeclaration(int modifiers):
   | ";" )
 }
 
-/*void MethodDeclaration():
-{
-}
-{
-    
-        (
-          // Modifiers already matched in the caller!
-          [ TypeParameters() ]
-          ResultType()
-          MethodDeclarator() [ "throws" NameList() ]
-          ( Block() | ";" )
-        )
-}*/
-
+/**
+* Création d'un objet JavaMethod et la récupération de tous ses paramètres
+* @return JavaMethod
+*/
 JavaMethod MethodDeclarator():
 {
 	Token nameToken;
@@ -1259,16 +1106,10 @@ JavaMethod MethodDeclarator():
   }
 }
 
-/*void MethodDeclarator():
-{
-}
-{
-    
-        (
-            <IDENTIFIER> FormalParameters() ( "[" "]" )*
-        )
-}*/
-
+/**
+* Récuperation la liste des attributes sous la forme de notre objet "JavaAttribute"
+* @return List<JavaAttribute>
+*/
 List<JavaAttribute> FormalParameters():
 {
 	List<JavaAttribute> parameters = new ArrayList<JavaAttribute>();
@@ -1290,24 +1131,10 @@ List<JavaAttribute> FormalParameters():
   }	  
 }
 
-/*void FormalParameters():
-{
-}
-{
-    
-        (
-         "("
-         [
-              FormalParameter()
-              (
-                  ","
-                  FormalParameter()
-              )*
-         ]
-         ")"
-        )
-}*/
-
+/**
+* Création et initialisation d'un objet JavaAttribute
+* @return JavaAttribute
+*/
 JavaAttribute FormalParameter():
 {
 	int modifiers;
@@ -1324,21 +1151,10 @@ JavaAttribute FormalParameter():
   }
 }
 
-/*void FormalParameter():
-{
-}
-{
-    
-      (
-        Modifiers()
-        Type()
-       [
-        <ELLIPSIS>  // ...
-       ]
-       VariableDeclaratorId()
-      )
-}*/
-
+/**
+* initialisation du constructeur, tout en faisant suivrant la portée
+*
+*/
 void ConstructorDeclaration(int modifiers):
 {
 	List<JavaAttribute> parameters;
@@ -1367,22 +1183,6 @@ void ConstructorDeclaration(int modifiers):
   "}"
 }
 
-/*void ConstructorDeclaration():
-{
-}
-{
-    
-        (
-            [ Annotation() ]
-            [ TypeParameters() ]
-            <IDENTIFIER> FormalParameters() [ "throws" NameList() ]
-            "{"
-                [ LOOKAHEAD(ExplicitConstructorInvocation()) ExplicitConstructorInvocation() ]
-            ( BlockStatement() )*
-            "}"
-        )
-}*/
-
 
 void ExplicitConstructorInvocation():
 {}
@@ -1391,25 +1191,18 @@ void ExplicitConstructorInvocation():
   [ TypeArguments() ] ("this"|"super") Arguments() ";"
 }
 
-/*void ExplicitConstructorInvocation():
-{
-}
-{
-    
-          LOOKAHEAD("this" Arguments() ";")
-          "this" Arguments() ";"
-        |
-        [ LOOKAHEAD(2) PrimaryExpression() "." ] "super" Arguments() ";"
-}*/
 
 void Initializer():
 {
 }
 {
-    
         [ <STATIC> ] Block()
 }
 
+/**
+* Récuperation du Type Simple
+* @return String
+*/
 String Type():
 {
   String name = "";
@@ -1420,25 +1213,15 @@ String Type():
  |
    name = PrimitiveType()
    )
-
    {
      return name;
    }
-
 }
 
-/*void Type():
-{
-}
-{
-    
-        (
-         LOOKAHEAD(2) ReferenceType()
-        |
-         PrimitiveType()
-        )
-}*/
-
+/**
+* Récuperation du Type reference
+* @return String
+*/
 String ReferenceType():
 {
   String name = "";
@@ -1454,20 +1237,10 @@ String ReferenceType():
    }
 }
 
-/*void ReferenceType():
-{
-}
-{
-    
-        (
-            LOOKAHEAD(3)
-            PrimitiveType() ( LOOKAHEAD(2) "[" "]" )+
-        |
-        ( ClassOrInterfaceType() ) ( LOOKAHEAD(2) "[" "]")*
-        )
-}*/
-
-
+/**
+* Récuperation du Type de la classe ou interface
+* @return String
+*/
 String ClassOrInterfaceType():
 {
   Token nameToken;
@@ -1480,24 +1253,11 @@ String ClassOrInterfaceType():
   }
 }
 
-/*void ClassOrInterfaceType():
-{
-}
-{
-    
-        (
-          <IDENTIFIER> [ LOOKAHEAD(2) TypeArguments() ]
-          ( LOOKAHEAD(2) "." 
-              <IDENTIFIER> [ LOOKAHEAD(2) TypeArguments() ]
-          )*
-        )
-}*/
 
 void TypeArguments():
 {
 }
 {
-    
         (
          <DIAMOND>   
         )
@@ -1513,7 +1273,6 @@ void TypeArgument():
 {
 }
 {
-    
         (
            ReferenceType()
          |
@@ -1525,7 +1284,6 @@ void WildcardBounds():
 {
 }
 {
-    
         (
         "extends" ReferenceType()
      |
@@ -1533,6 +1291,10 @@ void WildcardBounds():
         )
 }
 
+/**
+* Récuperation du nom de type Simple
+* @return String
+*/
 String PrimitiveType():
 {
   Token nameToken;
@@ -1560,30 +1322,10 @@ String PrimitiveType():
   }
 }
 
-/*void PrimitiveType():
-{
-}
-{
-    
-        (
-              "boolean"
-            |
-              "char"
-            | 
-              "byte"
-            | 
-              "short" 
-            | 
-              "int"
-            | 
-              "long"
-            | 
-              "float"
-            | 
-              "double" 
-        )
-}*/
-
+/**
+* Récuperation du Type de Resultat sinon void
+* @return String
+*/
 String ResultType():
 {
 	Token nameToken;
@@ -1601,18 +1343,6 @@ String ResultType():
   }
 }
 
-/*void ResultType():
-{
-}
-{
-    
-
-          (
-          "void"
-        |
-          Type()
-          )
-}*/
 
 String Name():
 /*
@@ -1639,22 +1369,6 @@ String Name():
   }
 }
 
-//void Name():
-/*
- * A lookahead of 2 is required below since "Name" can be followed
- * by a ".*" when used in the context of an "ImportDeclaration".
- */
-/*{
-}
-{
-    
-
-        <IDENTIFIER>
-        (
-            LOOKAHEAD(2)
-            "." <IDENTIFIER>
-        )*
-}*/
 
 void NameList():
 {
@@ -1897,17 +1611,6 @@ void PrimaryExpression():
   }
 }
 
-/*void PrimaryExpression():
-{
-}
-{
-    
-        PrimaryPrefix()
-        ( LOOKAHEAD(2)
-            PrimarySuffix()
-        )*
-}*/
-
 void MemberSelector():
 {
 }
@@ -1949,32 +1652,6 @@ String PrimaryPrefix():
   }
 }
 
-/*void PrimaryPrefix():
-{
-}
-{
-    
-          Literal()
-        |
-          "this"
-        |
-          "super" "." <IDENTIFIER>
-        |
-          LOOKAHEAD( ClassOrInterfaceType() "." <IDENTIFIER> )
-          ClassOrInterfaceType()"." <IDENTIFIER>
-        |
-          LOOKAHEAD( ClassOrInterfaceType() "." "super" "." <IDENTIFIER> )
-          ClassOrInterfaceType() "." "super" "." <IDENTIFIER>
-        |
-            "(" Expression() ")"
-        |
-            AllocationExpression() 
-        |
-          LOOKAHEAD( ResultType() "." "class" )
-          ResultType() "." "class"
-        |
-          Name()
-}*/
 
 String PrimarySuffix():
 {
@@ -2008,26 +1685,6 @@ String PrimarySuffix():
   }
 }
 
-/*void PrimarySuffix():
-{
-}
-{
-    
-          LOOKAHEAD(2)
-          "." "this"
-        |
-          LOOKAHEAD(2)
-          "." AllocationExpression()
-        |
-          LOOKAHEAD(3)
-          MemberSelector()
-        |
-          "[" Expression() "]"
-        |
-          "." <IDENTIFIER>
-        |
-          Arguments()
-}*/
 
 void Literal():
 {}
@@ -2193,6 +1850,9 @@ void BlockStatement():
              )
 }
 
+/**
+* Récuperation de varaible Locale
+*/
 void LocalVariableDeclaration():
 {
 	int modifiers;
@@ -2210,19 +1870,6 @@ void LocalVariableDeclaration():
   } )*
 }
 
-/*void LocalVariableDeclaration():
-{
-
-}
-{
-    
-      // old -- [ "final" ] Type() VariableDeclarator() ( "," VariableDeclarator() )*
-      // new -- Modifiers() Type() VariableDeclarator() ( "," VariableDeclarator() )*
-
-      [LOOKAHEAD(2) Annotation()] Modifiers() Type() VariableDeclarator()
-      ( "," VariableDeclarator()
-      )*
-}*/
 
 void EmptyStatement():
 {}
@@ -2580,7 +2227,6 @@ void DefaultValue():
 {
 }
 {
-    
         "default" MemberValue()
 }
 

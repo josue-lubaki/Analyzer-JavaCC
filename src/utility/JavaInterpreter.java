@@ -298,66 +298,67 @@ public class JavaInterpreter {
 					System.out.println("==========================================" + RESET);
 					System.out.println(sbCall);
 				}
-
-				// Créer un fichier et écrire les resultats
-				try {// créer un nouveau fichier qui stockera les informations de l'analyse ayant le
+				else {
+					// Créer un fichier et écrire les resultats
+					try {// créer un nouveau fichier qui stockera les informations de l'analyse ayant le
 						// nom de la classe traitée
 						// date de la création du fichier
-					long now = System.currentTimeMillis();
-					// convertir le timestamp en date
-					Date date = new Date(now);
-					// créer un objet SimpleDateFormat qui convertira la date en format texte
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
-					String path = directoryResultat + File.separator + currentClass.getcName() + "-" + sdf.format(date) + ".txt";
+						long now = System.currentTimeMillis();
+						// convertir le timestamp en date
+						Date date = new Date(now);
+						// créer un objet SimpleDateFormat qui convertira la date en format texte
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+						String path = directoryResultat + File.separator + currentClass.getcName() + "-" + sdf.format(date) + ".txt";
 
-					// créer dossier resultat
-					File dir = new File(directoryResultat);
-					if (!dir.exists()) {
-						boolean f = dir.mkdir();
-					} // Le fichier a été crée
+						// créer dossier resultat
+						File dir = new File(directoryResultat);
+						if (!dir.exists()) {
+							boolean f = dir.mkdir();
+						} // Le fichier a été crée
 
-					// si le fichier n'existe, le créer
-					if (!new File(path).exists()) {
-						boolean f = new File(path).createNewFile();
+						// si le fichier n'existe, le créer
+						if (!new File(path).exists()) {
+							boolean f = new File(path).createNewFile();
+						}
+
+						FileWriter fw = new FileWriter(path, true);
+
+						// écrire les informations dans le fichier
+						outResultat
+								.append("======================================")
+								.append("=============== LA CLASSE ").append(currentClass.getcName().toUpperCase())
+								.append(" ================")
+								.append("======================================\n")
+								.append(sbModifier.get())
+								.append(sbVisibility.get())
+								.append(sbInheritance.get())
+								.append(sbCoupling.get())
+								.append(sbCall.get());
+						// supprime les valeurs de couleur dans outResultat
+						fw.write(outResultat.toString()
+								.replace(RED, "")
+								.replace(GREEN_BOLD, "")
+								.replace(YELLOW_BOLD, "")
+								.replace(WHITE_BOLD, "")
+								.replace(WHITE_BOLD_BRIGHT, "")
+								.replace(RED, "")
+								.replace(YELLOW_BOLD_BRIGHT, "")
+								.replace(RESET, ""));
+						fw.close();
+						outResultat = new StringBuilder();
+						sbModifier.set(new StringBuilder());
+						sbVisibility.set(new StringBuilder());
+						sbInheritance.set(new StringBuilder());
+						sbCoupling.set(new StringBuilder());
+						sbCall.set(new StringBuilder());
+					} catch (IOException e) {
+						System.err.println("IOException: " + e.getMessage());
+						e.printStackTrace();
 					}
-
-					FileWriter fw = new FileWriter(path, true);
-
-					// écrire les informations dans le fichier
-					outResultat
-							.append("======================================")
-							.append("=============== LA CLASSE ").append(currentClass.getcName().toUpperCase())
-							.append(" ================")
-							.append("======================================\n")
-							.append(sbModifier.get())
-							.append(sbVisibility.get())
-							.append(sbInheritance.get())
-							.append(sbCoupling.get())
-							.append(sbCall.get());
-					// supprime les valeurs de couleur dans outResultat
-					fw.write(outResultat.toString()
-							.replace(RED, "")
-							.replace(GREEN_BOLD, "")
-							.replace(YELLOW_BOLD, "")
-							.replace(WHITE_BOLD, "")
-							.replace(WHITE_BOLD_BRIGHT, "")
-							.replace(RED, "")
-							.replace(YELLOW_BOLD_BRIGHT, "")
-							.replace(RESET, ""));
-					fw.close();
-					outResultat = new StringBuilder();
-					sbModifier.set(new StringBuilder());
-					sbVisibility.set(new StringBuilder());
-					sbInheritance.set(new StringBuilder());
-					sbCoupling.set(new StringBuilder());
-					sbCall.set(new StringBuilder());
-				} catch (IOException e) {
-					System.err.println("IOException: " + e.getMessage());
-					e.printStackTrace();
-				}
-			});
-		});
-	}
+				} // end else
+			}); // end read currentClass
+		}); // end read file
+	} // end method
 
 	private JavaClass getClassByName(String name) {
 		for (Object f : objectManager) {
