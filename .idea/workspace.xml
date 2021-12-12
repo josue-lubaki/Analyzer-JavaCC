@@ -11,9 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8d064a10-3072-4fae-ba5f-85a3dd5f907f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/JavaCC_jar/JavaCC.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/JavaCC_jar/JavaCC.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
