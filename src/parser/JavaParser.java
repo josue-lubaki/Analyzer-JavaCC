@@ -130,10 +130,10 @@ public class JavaParser implements JavaParserConstants {
                                         System.out.println("COMPUTER : Veuillez entrer l'indice du fichier");
                         System.out.print("Clavier |> ");
                         fChoiceString = new Scanner(System.in).nextLine();
-                      } while(!fChoiceString.matches("[0-9]") || Integer.parseInt(fChoiceString) > fileListResultat.size() || Integer.parseInt(fChoiceString) == 0);
+                      } while(!fChoiceString.matches("[0-9]+") || Integer.parseInt(fChoiceString) > fileListResultat.size() || Integer.parseInt(fChoiceString) == 0);
                                 fChoice = Integer.parseInt(fChoiceString) - 1;
                                 String nameFile = fileListResultat.get(fChoice).getName();
-                                List<String> output =  readFile(nameFile);
+                                List<String> output =  readFile(directoryResultat, nameFile);
                                 System.out.println();
                                 System.out.println("=========================================================== FILE " + nameFile + " =========================================================");
                 for(String line : output) {
@@ -161,8 +161,8 @@ public class JavaParser implements JavaParserConstants {
 * @param fileName le nom du fichier à lire
 * @return List<String>
 */
-  private static List<String> readFile(String fileName) {
-                String path = directoryResultat + "/" + fileName;
+  public static List<String> readFile(String directory, String fileName) {
+                String path = directory + "/" + fileName;
 
                 List<String> lines = new ArrayList<String>();
                 try {
@@ -234,6 +234,7 @@ public class JavaParser implements JavaParserConstants {
 * Methode qui permet de passer tous les fichiers recueillies dans la liste dans le parser
 * @param fileList la liste contenant tous les fichiers java à analyser
 * @param file correspond au fichier ouvert pour traitement
+* @param allowShowConsole true pour afficher le resultat sur la console
 */
         public static void traitment(List<File> fileList, File file, boolean allowShowConsole){
             JavaObjetManager om = new JavaObjetManager();
@@ -4256,16 +4257,6 @@ public class JavaParser implements JavaParserConstants {
     finally { jj_save(54, xla); }
   }
 
-  private boolean jj_3_20() {
-    if (jj_3R_76()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_258() {
-    if (jj_3R_259()) return true;
-    return false;
-  }
-
   private boolean jj_3R_64() {
     Token xsp;
     xsp = jj_scanpos;
@@ -4281,6 +4272,16 @@ public class JavaParser implements JavaParserConstants {
     xsp = jj_scanpos;
     if (jj_3R_145()) jj_scanpos = xsp;
     if (jj_3R_146()) return true;
+    return false;
+  }
+
+  private boolean jj_3_20() {
+    if (jj_3R_76()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_258() {
+    if (jj_3R_259()) return true;
     return false;
   }
 

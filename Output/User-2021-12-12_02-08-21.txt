@@ -1,4 +1,4 @@
-===================================================== LA CLASSE USER ======================================================
+===================================================== Classe User.java ======================================================
 Q1 |> Voici les statistiques de l'Analyse de la portee des attributs pour la classe User
 	Pourcentage des attributs Private: 100%
 	Pourcentage des attributs publics: 0%

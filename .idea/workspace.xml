@@ -10,14 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d064a10-3072-4fae-ba5f-85a3dd5f907f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/JUnit/JavaFileExplorerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/JUnit/JavaInterpreterTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/JUnit/JavaParserTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaCC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JavaCC.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Output/Adress-2021-12-10_22-55-45.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Output/Adress-2021-12-11_01-35-07.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Output/User-2021-12-10_22-55-45.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Output/User-2021-12-11_01-35-07.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Output/Adress-2021-12-11_01-35-07.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Output/User-2021-12-11_01-35-07.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$JJCalls.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$JJCalls.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/java.jj" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/java.jj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/pkgInterface/JavaInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/pkgInterface/JavaInterface.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaObjetManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaObjetManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/parser/JavaParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/JavaParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/java.jj" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/java.jj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pkgInterface/JavaInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkgInterface/JavaInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +72,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="create.test.in.the.same.root" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/JavaCC/inf1018-tp3-master" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/JavaCC/UQTR-JavaParser-master" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -86,21 +94,8 @@
       <recent name="JUnit" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.JavaParser">
-    <configuration name="JavaParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="parser.JavaParser" />
-      <module name="JavaCC" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="parser.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="JavaFileExplorerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.JUnit in JavaCC">
+    <configuration name="JUnit in JavaCC" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="JavaCC" />
       <extension name="coverage">
         <pattern>
@@ -109,8 +104,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="JUnit" />
-      <option name="MAIN_CLASS_NAME" value="JUnit.JavaFileExplorerTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -147,17 +141,59 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="JavaCC.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/JavaCC_jar/JavaCC.jar" />
-      <method v="2" />
+    <configuration name="JavaInterpreterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="JavaCC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="JUnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="JUnit" />
+      <option name="MAIN_CLASS_NAME" value="JUnit.JavaInterpreterTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JavaInterpreterTest.capitalizeString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="JavaCC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="JUnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="JUnit" />
+      <option name="MAIN_CLASS_NAME" value="JUnit.JavaInterpreterTest" />
+      <option name="METHOD_NAME" value="capitalizeString" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JavaParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="JavaCC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="JUnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="JUnit" />
+      <option name="MAIN_CLASS_NAME" value="JUnit.JavaParserTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.JavaFileExplorerTest" />
+        <item itemvalue="JUnit.JUnit in JavaCC" />
+        <item itemvalue="JUnit.JavaParserTest" />
+        <item itemvalue="JUnit.JavaInterpreterTest.capitalizeString" />
+        <item itemvalue="JUnit.JavaInterpreterTest" />
         <item itemvalue="JUnit.JavaFileExplorerTest.getAllJavaFiles (1)" />
-        <item itemvalue="JUnit.JavaFileExplorerTest.getAllJavaFiles" />
-        <item itemvalue="Application.JavaParser" />
-        <item itemvalue="JAR Application.JavaCC.jar" />
       </list>
     </recent_temporary>
   </component>
@@ -176,6 +212,8 @@
       <workItem from="1639156788233" duration="2135000" />
       <workItem from="1639170006467" duration="17457000" />
       <workItem from="1639210513899" duration="1227000" />
+      <workItem from="1639248936923" duration="2926000" />
+      <workItem from="1639289362514" duration="4375000" />
     </task>
     <servers />
   </component>

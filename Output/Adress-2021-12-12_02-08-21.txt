@@ -1,4 +1,4 @@
-===================================================== LA CLASSE ADRESS ======================================================
+===================================================== Classe Adress.java ======================================================
 Q1 |> Voici les statistiques de l'Analyse de la portee des attributs pour la classe Adress
 	Pourcentage des attributs Private: 75%
 	Pourcentage des attributs publics: 25%
