@@ -20,6 +20,7 @@ public class JavaInterface implements IAttribute, IInterface, IMethod {
 		this.iName = iName;
 		this.listAttributes = new ArrayList<>();
 		this.listMethods = new ArrayList<>();
+		this.listInterfaces = new ArrayList<>();
 	}
 
 	@Override

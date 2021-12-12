@@ -2,6 +2,7 @@ package utility;
 
 import pkgAttribute.JavaAttribute;
 import pkgClass.JavaClass;
+import pkgInterface.JavaInterface;
 import pkgMethod.JavaMethod;
 import pkgMethodCall.JavaMethodCall;
 
@@ -51,6 +52,10 @@ public class JavaInterpreter {
 
 		// Parcourir tous les fichiers
 		objectManager.forEach(obj -> {
+			if(obj instanceof JavaClass || obj instanceof JavaMethod || obj instanceof JavaInterface){
+				return;
+			}
+
 			JavaFile file = (JavaFile) obj;
 
 			// récupérer toutes les classes pour l'analyse
@@ -365,8 +370,11 @@ public class JavaInterpreter {
 	} // end method
 
 	private JavaClass getClassByName(String name) {
-		for (Object f : objectManager) {
-			JavaFile file = (JavaFile) f;
+		for (Object obj : objectManager) {
+			if(obj instanceof JavaClass || obj instanceof JavaMethod || obj instanceof JavaInterface){
+				continue;
+			}
+			JavaFile file = (JavaFile) obj;
 			Optional<JavaClass> classes = file.getListClasses()
 					.stream()
 					.filter(c -> c.getcName().equals(name))
@@ -377,5 +385,9 @@ public class JavaInterpreter {
 			}
 		}
 		return null;
+	}
+
+	public static String capitalizeString(String str){
+		return str.substring(0,1).toUpperCase() + str.substring(1).toLowerCase();
 	}
 }
