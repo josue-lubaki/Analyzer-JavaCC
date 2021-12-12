@@ -280,11 +280,11 @@ public class JavaInterpreter {
 
 				// Si l'affiche à la console est demandée
 				if(allowShowConsole){
-					System.out.println(GREEN_BOLD + "=================================================");
+					System.out.println(GREEN_BOLD + "===========================================================");
 					System.out.println(WHITE_BOLD_BRIGHT + "===============" + YELLOW_BOLD_BRIGHT + " La Classe "
 							+ currentClass.getcName()
 							+ WHITE_BOLD_BRIGHT + " ================");
-					System.out.println(GREEN_BOLD + "================================================" + RESET);
+					System.out.println(GREEN_BOLD + "===========================================================" + RESET);
 					System.out.println(WHITE_BOLD + "==========================================");
 					System.out.println("=============== Modifiers ================");
 					System.out.println("==========================================" + RESET);

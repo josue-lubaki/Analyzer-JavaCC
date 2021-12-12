@@ -10,20 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d064a10-3072-4fae-ba5f-85a3dd5f907f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/JUnit/JavaFileExplorerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/JUnit/JavaInterpreterTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/JUnit/JavaParserTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaCC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JavaCC.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Output/Adress-2021-12-10_21-08-27.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Output/User-2021-12-10_21-08-27.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/java.jj" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/java.jj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/pkgInterface/JavaInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/pkgInterface/JavaInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/JavaCC_jar/JavaCC.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/JavaCC_jar/JavaCC.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/JavaParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/JavaParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/java.jj" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/java.jj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pkgInterface/JavaInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkgInterface/JavaInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,6 +42,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
@@ -78,7 +68,7 @@
       <recent name="E:\SA_2021\Analyse des Programmes\JavaCC\Apprentissage\JavaCC\src\parser" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.JUnit in JavaCC">
+  <component name="RunManager" selected="JAR Application.JavaCC.jar">
     <configuration name="JavaParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="parser.JavaParser" />
       <module name="JavaCC" />
@@ -136,28 +126,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="JavaParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="JavaCC" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="JUnit.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="JUnit" />
-      <option name="MAIN_CLASS_NAME" value="JUnit.JavaParserTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="JavaCC.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/JavaCC_jar/JavaCC.jar" />
+      <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JAR Application.JavaCC.jar" />
         <item itemvalue="JUnit.JUnit in JavaCC" />
         <item itemvalue="JUnit.JavaFileExplorerTest" />
         <item itemvalue="Application.JavaParser" />
         <item itemvalue="JUnit.JavaInterpreterTest" />
-        <item itemvalue="JUnit.JavaParserTest" />
       </list>
     </recent_temporary>
   </component>
@@ -191,6 +170,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
