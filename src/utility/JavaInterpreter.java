@@ -262,11 +262,11 @@ public class JavaInterpreter {
 
 				// Si l'affiche à la console est demandée
 				if (allowShowConsole) {
-					System.out.println("=================================================");
+					System.out.println("===========================================================");
 					System.out.println("=============== La Classe "
 							+ currentClass.getcName()
 							+ " ================");
-					System.out.println("================================================");
+					System.out.println("===========================================================");
 					System.out.println("==========================================");
 					System.out.println("=============== Modifiers ================");
 					System.out.println("==========================================");
