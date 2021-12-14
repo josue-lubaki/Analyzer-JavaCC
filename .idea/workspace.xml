@@ -9,8 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d064a10-3072-4fae-ba5f-85a3dd5f907f" name="Changes" comment="">
+    <list default="true" id="8d064a10-3072-4fae-ba5f-85a3dd5f907f" name="Changes" comment="add SimpleCharStream">
+      <change afterPath="$PROJECT_DIR$/src/parser/SimpleCharStream.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$JJCalls.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$JJCalls.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserConstants.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserTokenManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserTokenManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/TokenMgrError.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/TokenMgrError.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/.gitignore" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +74,7 @@
       <recent name="E:\SA_2021\Analyse des Programmes\JavaCC\Apprentissage\JavaCC\src\parser" />
     </key>
   </component>
-  <component name="RunManager" selected="JAR Application.JavaCC.jar">
+  <component name="RunManager" selected="Application.JavaParser">
     <configuration name="JavaParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="parser.JavaParser" />
       <module name="JavaCC" />
@@ -129,10 +138,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.JavaParser" />
         <item itemvalue="JAR Application.JavaCC.jar" />
         <item itemvalue="JUnit.JUnit in JavaCC" />
         <item itemvalue="JUnit.JavaFileExplorerTest" />
-        <item itemvalue="Application.JavaParser" />
         <item itemvalue="JUnit.JavaInterpreterTest" />
       </list>
     </recent_temporary>
@@ -170,6 +179,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="add SimpleCharStream" />
+    <option name="LAST_COMMIT_MESSAGE" value="add SimpleCharStream" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
