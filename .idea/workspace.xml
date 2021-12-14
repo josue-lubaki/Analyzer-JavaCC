@@ -11,12 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8d064a10-3072-4fae-ba5f-85a3dd5f907f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-12-11_12_22_a_m___Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-12-11_12_22_a_m___Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-12-12_2_45_a_m___Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-12-12_2_45_a_m___Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Output/Adress-2021-12-12_02-08-21.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Output/User-2021-12-12_02-08-21.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/JavaCC_jar/JavaCC.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/JavaCC_jar/JavaCC.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/JavaInterpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/.gitignore" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +60,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="create.test.in.the.same.root" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/JavaCC/UQTR-JavaParser-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -186,6 +183,10 @@
       <workItem from="1639210513899" duration="1227000" />
       <workItem from="1639248936923" duration="2926000" />
       <workItem from="1639289362514" duration="4375000" />
+      <workItem from="1639456635867" duration="101000" />
+      <workItem from="1639457403913" duration="13000" />
+      <workItem from="1639457511349" duration="19000" />
+      <workItem from="1639458133734" duration="35000" />
     </task>
     <servers />
   </component>
