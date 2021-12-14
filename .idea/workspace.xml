@@ -10,10 +10,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d064a10-3072-4fae-ba5f-85a3dd5f907f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/.classpath" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-12-11_12_22_a_m___Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-12-11_12_22_a_m___Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-12-12_2_45_a_m___Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-12-12_2_45_a_m___Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaCharStream.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaCharStream.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$JJCalls.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$JJCalls.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser$LookaheadSuccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserConstants.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserTokenManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/JavaParserTokenManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/ParseException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/ParseException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/Token$GTToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/Token$GTToken.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/Token.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/Token.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/parser/TokenMgrError.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/parser/TokenMgrError.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/pkgAttribute/JavaAttribute.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/pkgAttribute/JavaAttribute.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/pkgClass/JavaClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/pkgClass/JavaClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/pkgMethod/JavaMethod.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/pkgMethod/JavaMethod.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/pkgMethodCall/JavaMethodCall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/pkgMethodCall/JavaMethodCall.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaFile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaFileExplorer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaFileExplorer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaImport.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaImport.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaInterpreter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaModifierSet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaModifierSet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCC/utility/JavaToken.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,6 +206,7 @@
       <workItem from="1639457403913" duration="13000" />
       <workItem from="1639457511349" duration="19000" />
       <workItem from="1639458133734" duration="35000" />
+      <workItem from="1639461015571" duration="25000" />
     </task>
     <servers />
   </component>
