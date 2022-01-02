@@ -1,4 +1,4 @@
-## Analyzer-JavaCC
+## Analyzer-JavaCC [![wakatime](https://wakatime.com/badge/github/josue-lubaki/Analyzer-JavaCC.svg)](https://wakatime.com/badge/github/josue-lubaki/Analyzer-JavaCC)
 ### Les différents objectifs à atteindre dans ce projet sont donnés dans ce qui suit :
 - Analyse de la portée des attributs des classes d’un programme : Pour chaque
 classe du programme analysé, donnez les statistiques descriptives suivantes : 
