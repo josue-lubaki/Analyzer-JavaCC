@@ -28,5 +28,5 @@ nous pouvons avoir une idée sur la visibilité (permanente) entre objets :
   classe d’appartenance) qu’elle appelle directement (appels directs uniquement –
   ne pas considérer les appels indirects).
   
-  ## Demo
+  ## Demo - Youtube video
   [![Everything Is AWESOME](https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/24c82312-4892-48b9-9fb6-3d49ba8a505f.gif?ClientID=vimeo-core-prod&Date=1639297032&Signature=12bedb2a1e0484cb7e576476ea24739d74075268)](https://youtu.be/bdo1jc7CAmc "JavaCC Analyseur")
